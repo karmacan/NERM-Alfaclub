@@ -1,3 +1,3 @@
 {
-  "mongoPath": "mongodb+srv://host:1234@devjar-hwxoj.mongodb.net/test?retryWrites=true&w=majority"
+  "dbPath": "mongodb+srv://host:1234@devjar-hwxoj.mongodb.net/test?retryWrites=true&w=majority"
 }

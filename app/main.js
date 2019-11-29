@@ -5,11 +5,11 @@
 process.env.NODE_CONFIG_DIR = './app/config'; // set custom path for config dir
 
 const config = require('config');
-const mongoPath = config.get('mongoPath');
+const dbPath = config.get('dbPath');
 
 const mongoose = require('mongoose');
-const opts = { useNewUrlParser: true, useUnifiedTopology: true };
-mongoose.connect(mongoPath, opts)
+const opts = { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true };
+mongoose.connect(dbPath, opts)
   .then(() => { console.log('_dev_ DB connection success!') })
   .catch((err) => { console.log(`_dev_ ${err}`) });
 

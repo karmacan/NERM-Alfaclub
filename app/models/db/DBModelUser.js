@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const modelSchema = new mongoose.Schema({
+const docSchema = new mongoose.Schema({
   name: {type: String, required: true},
   email: {type: String, required: true, unique: true},
   pass: {type: String, required: true},
@@ -8,6 +8,8 @@ const modelSchema = new mongoose.Schema({
   regDate: {type: Date, default: Date.now()}
 });
 
-const modelName = 'user';
+const colName = 'users';
 
-module.exports = User = mongoose.model(modelName, modelSchema);
+const DBModelUser = mongoose.model(colName, docSchema);
+
+module.exports = DBModelUser;
