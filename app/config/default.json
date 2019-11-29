@@ -1,3 +1,4 @@
 {
-  "dbPath": "mongodb+srv://host:1234@devjar-hwxoj.mongodb.net/test?retryWrites=true&w=majority"
+  "mongoPath": "mongodb+srv://host:1234@devjar-hwxoj.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtPrivateKey": "c0dew0rd"
 }

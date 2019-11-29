@@ -8,6 +8,7 @@ const DBModelUser = require('../models/db/DBModelUser');
 
 const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
+const jwt = require('jsonwebtoken');
 
 ////////////////////////////////////////
 // USERS
@@ -18,12 +19,13 @@ postUsersChecks = [
   check('pass', 'Password is short!').isLength({min: 4})
 ];
 
+// ADD USER
 router.post('/users', postUsersChecks, async (req, res) => {
+  // Log post request body
   //console.log(req.body);
   
   // Check if req errors
   const validErrors = validationResult(req);
-  console.log('1 ' + validErrors.toString());
   if (!validErrors.isEmpty()) return res.status(400).json({errors: validErrors.array()});
 
   // Destruct req body
@@ -50,13 +52,23 @@ router.post('/users', postUsersChecks, async (req, res) => {
     avatar
   });
 
-  console.log('2 ' + user.toString());
+  //console.log(user.toString());
 
   // Save user to db
   await user.save();
 
-  // 
-  res.send('User registered!');
+  // Result send tokened user id
+  const jwtPayload = {user: {id: user.id}};
+
+  const config = require('config');
+  const jwtPrivateKey = config.get('jwtPrivateKey');
+  
+  const jwtOpts = {expiresIn: 360000};
+
+  jwt.sign(jwtPayload, jwtPrivateKey, jwtOpts, (err, token) => {
+    if (err) { console.log(err); return; }
+    return res.json({token}); // result send json
+  });
 });
 
 module.exports = router;
