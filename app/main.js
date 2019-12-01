@@ -25,7 +25,7 @@ server.listen(port, () => {
 });
 
 ////////////////////////////////////////
-// ROUTES
+// ROUTES (API)
 
 server.use(express.json({extened: false})); // must be before router
 

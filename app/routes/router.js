@@ -10,8 +10,9 @@ const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
 const jwt = require('jsonwebtoken');
 
-////////////////////////////////////////
-// USERS
+////////////////////////////////////////////////////////////////////////////////
+// USER
+////////////////////////////////////////////////////////////////////////////////
 
 postUsersChecks = [
   check('name', 'Name is empty!').not().isEmpty(),
@@ -19,8 +20,10 @@ postUsersChecks = [
   check('pass', 'Password is short!').isLength({min: 4})
 ];
 
-// ADD USER
-router.post('/users', postUsersChecks, async (req, res) => {
+////////////////////////////////////////
+// POST USER (user data provided via req body)
+
+router.post('/user', postUsersChecks, async (req, res) => {
   // Log post request body
   //console.log(req.body);
   
@@ -57,8 +60,8 @@ router.post('/users', postUsersChecks, async (req, res) => {
   // Save user to db
   await user.save();
 
-  // Result send tokened user id
-  const jwtPayload = {user: {id: user.id}};
+  // Send result to client
+  const jwtPayload = {userId: user.id};
 
   const config = require('config');
   const jwtPrivateKey = config.get('jwtPrivateKey');
@@ -67,8 +70,20 @@ router.post('/users', postUsersChecks, async (req, res) => {
 
   jwt.sign(jwtPayload, jwtPrivateKey, jwtOpts, (err, token) => {
     if (err) { console.log(err); return; }
-    return res.json({token}); // result send json
+    return res.json({token}); // result send json tokened user id
   });
+});
+
+////////////////////////////////////////
+// GET USER (user token provided via req header)
+
+const verifyToken = require('../midware/router');
+
+router.get('/user', verifyToken, async (req, res) => {
+  console.log('Token varification completed!');
+  const userId = req.userId;
+  const user = await DBModelUser.findById(userId)/*without password*/.select('-pass');
+  res.json(user)
 });
 
 module.exports = router;
