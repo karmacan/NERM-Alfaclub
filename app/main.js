@@ -30,4 +30,4 @@ server.listen(port, () => {
 server.use(express.json({extened: false})); // must be before router
 
 const routerBase = '/api'; // router base adding to every router path
-server.use(routerBase, require('./routes/router'));
+server.use(routerBase, require('./routes/api/router'));
