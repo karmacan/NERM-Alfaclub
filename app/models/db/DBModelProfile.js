@@ -1,11 +1,18 @@
 const mongoose = require('mongoose');
 
 const docSchema = new mongoose.Schema({
-  // Referencing another schema
+  // Referencing another schema (by collection name)
   user: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
 
+  // Required
+  profession: {type: String, required: true},
+  expLvl: {type: String, required: true},
+  skills: {type: [String], required: true},
+
   location: {type: String},
-  languages: [{title: {type: String}}],
+  languages: [String],
+
+  // ??? [{type: String}] vs {type: [String]} vs [String]
 
   webLinks: {
     github: {type: String},
@@ -13,13 +20,9 @@ const docSchema = new mongoose.Schema({
     instagram: {type: String}
   },
 
-  profession: {type: String, required: true},
-  expLvl: {type: String, required: true},
-  skills: {type: [String], required: true},
-
   jobExp: [{
     company: {type: String, required: true},
-    position: {type: [String], required: true},
+    position: {type: String, required: true},
     from: {type: Date, required: true},
     to: {type: Date},
     current: {type: Boolean, default: false},
@@ -28,7 +31,7 @@ const docSchema = new mongoose.Schema({
   
   education: [{
     place: {type: String, required: true},
-    majoringIn: {type: String},
+    majoringIn: {type: String, required: true},
     from: {type: Date, required: true},
     to: {type: Date},
     current: {type: Boolean, default: false}

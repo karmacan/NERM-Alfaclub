@@ -8,7 +8,7 @@ const config = require('config');
 const mongoPath = config.get('mongoPath');
 
 const mongoose = require('mongoose');
-const opts = { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true };
+const opts = { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false };
 mongoose.connect(mongoPath, opts)
   .then(() => { console.log('_dev_ DB connection success!') })
   .catch((err) => { console.log(`_dev_ ${err}`) });
