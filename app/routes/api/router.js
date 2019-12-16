@@ -423,4 +423,42 @@ router.get('/profiles', async (req, res) => {
   res.json(profiles);
 });
 
+////////////////////////////////////////
+// GET GITHUB REPOS [take github username]
+
+// const request = require('request'); // replaced by node-fetch
+const fetch = require('node-fetch');
+
+router.get('/github/:username/repos', async (req, res) => {
+  const config = require('config');
+  const oauthGithubClientId = config.get('oauthGithubClientId');
+  const oauthGithubClientSecret = config.get('oauthGithubClientSecret');
+
+  const githubUsername = req.params.username;
+
+  const urlParams = `?per_page=5&sort=created:asc&client_id=${oauthGithubClientId}&client_secret=${oauthGithubClientSecret}`;
+  
+  const url = `https://api.github.com/users/${githubUsername}/repos${urlParams}`;
+  
+  const opts = {
+    // url,
+    method: 'get',
+    headers: {
+      'user-agent': 'node.js'
+    }
+  }
+
+  // request(opts, (error, response, bodyString) => {
+  //   if (error) return res.status(500).send(error);
+  //   if (response.statusCode === 404) return res.status(404).send('Github profile not found!');
+  //   return res.json(JSON.parse(body));
+  // });
+
+  const response = await fetch(url, opts);
+  if (response.status === 404) return res.status(404).send('Github profile not found!');
+  const bodyJson = await response.json();
+  return res.json(bodyJson);
+
+});
+
 module.exports = router;
