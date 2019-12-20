@@ -133,7 +133,7 @@ router.get('/user/self', verifyToken, async (req, res) => {
 });
 
 ////////////////////////////////////////
-// POST PROFILE (create or update) [take token, give profile] (user token provided via req header)
+// POST PROFILE |create or update| [take token, give profile] (user token provided via req header)
 
 const userProfileChecks = [
   check('profession', 'Profession wasn\'t provided!').not().isEmpty(),
@@ -239,7 +239,7 @@ router.get('/user/profile', verifyToken, async (req, res) => {
 });
 
 ////////////////////////////////////////
-// DELETE USER WITH PROFILE [take token] (user token provided via req header)
+// DELETE PROFILE WITH USER [take token, give message] (user token provided via req header)
 
 router.delete('/user/profile', verifyToken, async (req, res) => {
   try {
@@ -250,8 +250,7 @@ router.delete('/user/profile', verifyToken, async (req, res) => {
 
     return res.send('Delete user with profile complete!');
   } catch (err) {
-    console.log(err.message);
-    return res.status(500).send('Delete user with profile server error!');
+    return res.status(500).send(err.message);
   }
 });
 
@@ -354,7 +353,7 @@ router.put('/user/profile/education', [verifyToken, addEducationChecks], async (
 
   const profile = await DBModelProfile.findOne({user: req.userId});
 
-  if (!profile) return res.status(400).json({errors: [{msg: 'Profile doesn\'t exist!'}]})
+  if (!profile) return res.status(400).json({errors: [{msg: 'Profile doesn\'t exist!'}]});
 
   profile.education.unshift(_education); // unshift == push first
 
@@ -369,17 +368,17 @@ router.put('/user/profile/education', [verifyToken, addEducationChecks], async (
 router.delete('/user/profile/education/:education_id', verifyToken, async (req, res) => {
   const profile = await DBModelProfile.findOne({user: req.userId});
   
-  if (!profile) return res.status(400).json({errors: [{msg: 'Profile doesn\'t exist!'}]})
+  if (!profile) return res.status(400).json({errors: [{msg: 'Profile doesn\'t exist!'}]});
 
   // Retain only ids
   const educationIds = profile.education.map(item => item._id);
 
-  if (!educationIds) return res.status(400).json({errors: [{msg: 'No educations for delete!'}]})
+  if (!educationIds) return res.status(400).json({errors: [{msg: 'No educations for delete!'}]});
 
   // Get id index
   const targetIdIndex = educationIds.indexOf(req.params.education_id);
   
-  if (targetIdIndex == -1) return res.status(400).json({errors: [{msg: 'No target for delete!'}]})
+  if (targetIdIndex == -1) return res.status(400).json({errors: [{msg: 'No target for delete!'}]});
 
   // Splice original
   profile.education.splice(targetIdIndex, 1);
@@ -387,6 +386,189 @@ router.delete('/user/profile/education/:education_id', verifyToken, async (req, 
   await profile.save();
 
   return res.json(profile);
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// POST
+////////////////////////////////////////////////////////////////////////////////
+
+const DBModelPost = require('../../models/db/DBModelPost');
+
+////////////////////////////////////////
+// GET ONE POST [take token and id, give posts] (user id provided via req path param)
+
+router.get('/post/:post_id', async (req, res) => {
+  try {
+    const post = await DBModelPost.findOne({_id: req.params.post_id});    
+    if (!post) return res.status(400).json({errors: [{msg: 'Post doesn\'t exist!'}]})  
+    
+    res.json(post);
+  } catch (err) {
+    // Handling multiple errors (from async/await)
+    console.log(err.message);
+    if (err.kind == 'ObjectId') return res.status(400).json({errors: [{msg: 'Post doesn\'t exist!'}]});
+    else return res.status(500).send(err.message);
+  }
+});
+
+////////////////////////////////////////
+// GET ALL POSTS [take token, give posts] (user token provided via req header)
+
+router.get('/posts', verifyToken, async (req, res) => {
+  const posts = await DBModelPost.find().sort({date: -1});
+  res.json(posts);
+});
+
+////////////////////////////////////////
+// CREATE POST [take token and text, give post] (user token provided via req header, text via req body)
+
+createPostChecks = [
+  check('text', 'Text wasn\'t provided!').not().isEmpty()
+];
+
+router.post('/user/post', [verifyToken, createPostChecks], async (req, res) => {
+  const validErrors = validationResult(req);
+  if (!validErrors.isEmpty()) return res.status(400).json({errors: validErrors.array()});
+  
+  const user = await DBModelUser
+    .findById({_id: req.userId})
+    .select('-pass');
+
+  const __post = {
+    user: req.userId,
+    userName: user.name,
+    text: req.body.text,
+    avatar: user.avatar
+  };
+
+  const _post = new DBModelPost(__post);
+
+  const post = await _post.save();
+
+  return res.json(post);
+});
+
+////////////////////////////////////////
+// DELETE POST [take token, give message] (user token provided via req header)
+
+router.delete('/user/post/:post_id', verifyToken, async (req, res) => {
+  const post = await DBModelPost.findById(req.params.post_id);
+
+  if (!post) return res.status(400).json({errors: [{msg: 'Post doesn\'t exist!'}]});
+  if (post.user.toString() !== req.userId) return res.status(400).json({errors: [{msg: 'Post doesn\'t belong!'}]});
+  
+  await post.remove();
+
+  return res.send('Post successfully removed!');
+});
+
+////////////////////////////////////////
+// POST LIKE [take token, give post likes]
+
+router.put('/user/post/:post_id/like', verifyToken, async (req, res) => {
+  try {
+    const post = await DBModelPost.findById(req.params.post_id);
+    const user = post.likes.find(like => like.user.toString() === req.userId);
+    if (user) return res.status(400).json({errors: [{msg: 'Post has already liked!'}]});
+    
+    post.likes.unshift({user: req.userId});
+    
+    await post.save();
+    return res.json(post.likes);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+////////////////////////////////////////
+// POST UNLIKE [take token, give post likes]
+
+router.put('/user/post/:post_id/unlike', verifyToken, async (req, res) => {
+  try {
+    const post = await DBModelPost.findById(req.params.post_id);
+    const user = post.likes.find(like => like.user.toString() === req.userId);
+    if (!user) return res.status(400).json({errors: [{msg: 'Post hasn\'t been liked!'}]});
+    
+    const likeInd = post.likes
+      .map(like => like.user.toString())
+      .indexOf(req.userId);
+
+    post.likes.splice(likeInd, 1);
+    
+    await post.save();
+    return res.json(post.likes);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+////////////////////////////////////////
+// POST ADD COMMENT [take token, give post comments]
+
+const postCommentChecks = [
+  check('text', 'Text wasn\'t provided!')
+];
+
+router.post('/user/post/:post_id/comment', [verifyToken, postCommentChecks], async (req, res) => {
+  const validErrors = validationResult(req);
+  if (!validErrors.isEmpty()) return res.status(400).json({errors: validErrors.array()});
+  
+  try {    
+    const user = await DBModelUser
+      .findById({_id: req.userId})
+      .select('-pass');
+
+    const _comment = {
+      user: req.userId,
+      userName: user.name,
+      text: req.body.text,
+      avatar: user.avatar
+    };
+
+    const post = await DBModelPost.findById(req.params.post_id);
+
+    post.comments.unshift(_comment);
+
+    await post.save();
+
+    return res.json(post.comments);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+////////////////////////////////////////
+// POST DELETE COMMENT [take token, give post comments]
+
+router.delete('/user/post/:post_id/comment/:comment_id', verifyToken, async (req, res) => {
+  try {
+    const post = await DBModelPost.findById(req.params.post_id);
+
+    const _comment = post.comments.find(comment => comment._id.toString() === req.params.comment_id);
+
+    // console.log(_comment._id.constructor.name); // ObjectID
+
+    if (!_comment) return res.status(404).json({errors: [{msg: 'Comment doesn\'t exist!'}]});
+
+    // console.log(req.userId.constructor.name); // String
+    // console.log(post.user.constructor.name); // ObjectID
+    // console.log(req.userId === post.user.toString());
+
+    //if (req.userId !== _comment.user.toString()) return res.status(400).json({errors: [{msg: 'Comment doesn\'t belong!'}]});
+    if (req.userId !== (_comment.user.toString() || post.user.toString())) return res.status(400).json({errors: [{msg: 'Comment doesn\'t belong!'}]});
+
+    const commentInd = post.comments
+      .map(comment => comment.user.toString())
+      .indexOf(req.userId);
+
+    post.comments.splice(commentInd, 1);
+    
+    await post.save();
+ 
+    return res.json(post.comments);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -398,7 +580,7 @@ router.delete('/user/profile/education/:education_id', verifyToken, async (req, 
 
 router.get('/profile/:user_id', async (req, res) => {
   try {
-    let profile = await DBModelProfile
+    const profile = await DBModelProfile
       .findOne({user: req.params.user_id})
       .populate(/*originField*/ 'user', /*includedFields*/ ['name', 'avatar']);
     
@@ -424,7 +606,7 @@ router.get('/profiles', async (req, res) => {
 });
 
 ////////////////////////////////////////
-// GET GITHUB REPOS [take github username]
+// GET GITHUB REPOS |oauth| [take github username]
 
 // const request = require('request'); // replaced by node-fetch
 const fetch = require('node-fetch');
@@ -437,7 +619,6 @@ router.get('/github/:username/repos', async (req, res) => {
   const githubUsername = req.params.username;
 
   const urlParams = `?per_page=5&sort=created:asc&client_id=${oauthGithubClientId}&client_secret=${oauthGithubClientSecret}`;
-  
   const url = `https://api.github.com/users/${githubUsername}/repos${urlParams}`;
   
   const opts = {
@@ -454,10 +635,14 @@ router.get('/github/:username/repos', async (req, res) => {
   //   return res.json(JSON.parse(body));
   // });
 
-  const response = await fetch(url, opts);
-  if (response.status === 404) return res.status(404).send('Github profile not found!');
-  const bodyJson = await response.json();
-  return res.json(bodyJson);
+  try {
+    const response = await fetch(url, opts);
+    if (response.status === 404) return res.status(404).send('Github profile not found!');
+    const bodyJson = await response.json();
+    return res.json(bodyJson);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 
 });
 
