@@ -152,8 +152,7 @@ router.post('/user/profile', [verifyToken, userProfileChecks], async (req, res) 
     profession,
     expLvl,
     skills,
-    location,
-    languages,
+    bio,
     webLinks
   } = req.body;
 
@@ -167,13 +166,13 @@ router.post('/user/profile', [verifyToken, userProfileChecks], async (req, res) 
 
   // Filed from body
   
-  // PROFESSION
+  // PROFESSION (*)
   if (profession) _profile.profession = profession;
 
-  // EXP LVL
+  // EXP LVL (*)
   if (expLvl) _profile.expLvl = expLvl;
 
-  // SKILLS
+  // SKILLS (*)
   if (Array.isArray(skills)) {
     _profile.skills = skills;
   }
@@ -181,16 +180,8 @@ router.post('/user/profile', [verifyToken, userProfileChecks], async (req, res) 
     _profile.skills = skills.split(',').map(skill => skill.trim());
   }
 
-  // LANGUAGES
-  if (Array.isArray(languages)) {
-    _profile.languages = languages;
-  }
-  else if (typeof languages === 'string') {
-    _profile.languages = languages.split(',').map(languages => languages.trim());
-  }
-
-  // LOCATION
-  if (location) _profile.location = location;
+  // BIO
+  if (bio) _profile.bio = bio;
 
   // WEB LINKS
   if (webLinks && webLinks.github) _profile.webLinks.github = webLinks.github;

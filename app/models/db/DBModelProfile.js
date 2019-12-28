@@ -9,15 +9,15 @@ const docSchema = new mongoose.Schema({
   expLvl: {type: String, required: true},
   skills: {type: [String], required: true},
 
-  location: {type: String},
-  languages: [String],
+  // Location and languages
+  bio: {type: String},
 
   // ??? [{type: String}] vs {type: [String]} vs [String]
 
   webLinks: {
     github: {type: String},
-    facebook: {type: String},
-    instagram: {type: String}
+    linkedin: {type: String},
+    facebook: {type: String}
   },
 
   jobExp: [{
