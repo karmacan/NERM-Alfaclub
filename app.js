@@ -1,1 +1,1 @@
-require('./app/main');
+require('./backend/server');

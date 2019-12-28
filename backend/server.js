@@ -2,7 +2,7 @@
 ////////////////////////////////////////
 // DB
 
-process.env.NODE_CONFIG_DIR = './app/config'; // set custom path for config dir
+process.env.NODE_CONFIG_DIR = './backend/config'; // set custom path for config dir
 
 const config = require('config');
 const mongoPath = config.get('mongoPath');
