@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- INCLUDE COMPILED BUILD STYLE -->
+  <link rel="stylesheet" href="/style/build/style.min.css" />
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/c8cbc95188.js" crossorigin="anonymous"></script>  
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+  <title>DevJar</title>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="dev-nav bg-dark">
+    <!-- <h1>
+      <a href="dashboard.html">
+        <i class="fas fa-code"></i>
+        <span>&nbsp;Dashboard</span>
+      </a>
+    </h1> -->
+    <h1>
+      <a href="index.html">
+        <i class="fas fa-code"></i>
+        <span>&nbsp;Welcome</span>
+      </a>
+    </h1>
+    <ul>
+      <li><a href="profiles.html">Profiles</a></li>
+      <li><a href="signup.html">Signup</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+  </nav>
+
+  <section class="case">
+    <h1 class="txt-l txt-primary">Log In</h1>
+    <p class="txt-m">
+      <i class="fas fa-sign-in-alt"></i>
+      &nbsp;Enter Your Account
+    </p>
+    <!-- LOGIN FORM -->
+    <form class="dev-form" action="/dashboard.html">
+      <!-- Email -->
+      <div class="dev-form-field">
+        <input type="text" placeholder="Email" required />
+      </div>
+      <!-- Pass -->
+      <div class="dev-form-field">
+        <input type="password" placeholder="Password" minlength="4" />
+      </div>
+      <!-- Submit -->
+      <div class="dev-form-field">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+      </div>
+    </form>
+    <p class="my-1">
+      Don't have an account?
+      &nbsp; <a href="/signup.html">Sign Up</a>
+    </p>
+  </section>
+
+</body>
+</html>

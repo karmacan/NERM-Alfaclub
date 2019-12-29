@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- INCLUDE COMPILED BUILD STYLE -->
+  <link rel="stylesheet" href="/style/build/style.min.css" />
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/c8cbc95188.js" crossorigin="anonymous"></script>  
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+  <title>DevJar</title>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="dev-nav bg-dark">
+    <h1>
+      <a href="dashboard.html">
+        <i class="fas fa-code"></i>
+        <span>&nbsp;Dashboard</span>
+      </a>
+    </h1>
+    <ul>
+      <li><a href="profiles.html">Profiles</a></li>
+      <!-- 
+      <li><a href="signup.html">Signup</a></li>
+      <li><a href="login.html">Login</a></li> 
+      -->
+      <li><a href="posts.html">Posts</a></li>
+      <!-- Log Out -->
+      <li>
+        <a href="index.html">
+          <i class="fa fa-sign-out"></i>
+          <span>&nbsp;Exit</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="case">
+    <div class="my-2">
+      <a href="/posts.html" class="btn btn-gray">
+        <i class="fas fa-chevron-left"></i>
+        &nbsp;Back To Posts
+      </a>
+    </div>
+
+    <p class="txt-m">
+      <i class="fas fa-file"></i>
+      &nbsp;Post Discussion
+    </p>
+
+    <!-- Post -->
+    <div class="dev-post card bg-light p-1 my-1">
+      <div>
+        <a href="profile.html">
+          <img
+            class="img"
+            src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+            alt=""
+          />
+          <h4>John Doe</h4>
+        </a>
+      </div>
+      <div>
+        <p class="my-1">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
+          possimus corporis sunt necessitatibus! Minus nesciunt soluta
+          suscipit nobis. Amet accusamus distinctio cupiditate blanditiis
+          dolor? Illo perferendis eveniet cum cupiditate aliquam?
+        </p>
+      </div>
+    </div>
+
+    <!-- Submit Comment -->
+    <div class="">
+      <form class="dev-form bg-secondary my-1 p-1">
+        <div class="p-1 bg-primary">
+          <h3>Leave A Comment</h3>
+        </div>
+        <div class="dev-form-field">
+          <textarea name="_comment" placeholder="..."></textarea>
+        </div>
+        <input type="submit" class="btn btn-gray" value="Submit" />
+      </form>
+    </div>
+
+    <!-- Comments -->
+    <div class="">
+      <!-- Comment 1 -->
+      <div class="dev-comment bg-light my-1 p-1">
+        <div>
+          <a href="profile.html">
+            <img
+              class="img img-round"
+              src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+              alt=""
+            />
+            <h4>John Doe</h4>
+          </a>
+        </div>
+        <div>
+          <p class="my-1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
+            possimus corporis sunt necessitatibus! Minus nesciunt soluta
+            suscipit nobis. Amet accusamus distinctio cupiditate blanditiis
+            dolor? Illo perferendis eveniet cum cupiditate aliquam?
+          </p>
+        </div>
+      </div>
+      <!-- Comment 2 -->
+      <div class="dev-comment bg-light p-1 my-1">
+        <div>
+          <a href="profile.html">
+            <img
+              class="img img-round"
+              src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+              alt=""
+            />
+            <h4>John Doe</h4>
+          </a>
+        </div>
+        <div>
+          <p class="my-1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
+            possimus corporis sunt necessitatibus! Minus nesciunt soluta
+            suscipit nobis. Amet accusamus distinctio cupiditate blanditiis
+            dolor? Illo perferendis eveniet cum cupiditate aliquam?
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  </section>
+
+</body>
+</html>
