@@ -5,9 +5,9 @@ import { useState } from 'react'; // hook
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { alertDisplay } from '../../storage/_partials/partialsDispatcher;'
+import { setAlert } from '../../storage/_partials/partialsDispatcher';
 
-function Signup() {
+function Signup(props) {
 
   ////////////////////////////////////////
   // STATE HOOK
@@ -42,7 +42,12 @@ function Signup() {
 
   const handOnSubmit = async (ev) => {
     ev.preventDefault();
-    if (pass !== repass) { console.log('Passwords don\'t match!'); return; }
+
+    if (pass !== repass) { 
+      //console.log('Passwords don\'t match!'); 
+      props.setAlert('danger', 'Passwords don\'t match!')
+      return; 
+    }
 
     const opts = {
       method: 'post',
@@ -150,12 +155,10 @@ function Signup() {
 ////////////////////////////////////////
 // CONNECT REDUX
 
-const mapStateToProps = {
-
-};
+const mapStateToProps = rootState => {};
 
 const mapDispatcherToProps = {
-  alertDisplay
+  setAlert
 };
 
-export default connect(mapStateToProps, mapDispatcherToProps)(Signup);
+export default connect(null, mapDispatcherToProps)(Signup);

@@ -1,7 +1,7 @@
 const initialState = {
-  // alert: {
-  //   id
-  // }
+  alerts: [
+    // { id, type, msg }
+  ]
 }
 
 export default (state = initialState, action) => {
@@ -11,12 +11,18 @@ export default (state = initialState, action) => {
       const alert = action.payload;
       return {
         ...state,
-        alert
-      }
+        alerts: [
+          ...state.alerts,
+          alert
+        ]
+      };
 
     case 'ALERT_REMOVE':
       const alertId = action.payload;
-      return state.filter(alert => alert.id !== alertId);
+      return {
+        ...state,
+        alerts: state.alerts.filter(alert => alert.id !== alertId)
+      }
 
     default:
       return state;

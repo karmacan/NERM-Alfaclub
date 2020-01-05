@@ -10,6 +10,7 @@ import { Route } from 'react-router-dom';
 import { Switch } from 'react-router-dom';
 
 import Navbar from './_partials/Navbar';
+import Alerts from './_partials/Alerts';
 import Landing from './auth/Landing';
 import Login from './auth/Login';
 import Signup from './auth/Signup';
@@ -21,6 +22,7 @@ function App() {
         <Fragment>
           <Navbar />
           <Route exact path="/" component={Landing} />
+          <Alerts />
           <Switch>
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/login" component={Login} />
