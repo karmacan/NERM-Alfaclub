@@ -25,9 +25,22 @@ server.listen(port, () => {
 });
 
 ////////////////////////////////////////
+// ENABLE CORS (from frontend [localhost:3000] to backend [localhost:5000])
+
+const cors = require('cors'); // allows to set cors res header (Access-Control-Allow-Origin)
+server.use(cors());
+
+server.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); // set cors res header to all (*)
+  next();
+});
+
+////////////////////////////////////////
 // ROUTES (API)
 
-server.use(express.json({extened: false})); // must be before router
+// Allows access to req.body within request handler (express.json() ~~ bodyparser.json())
+server.use(express.json({extended: false})); // must be before router
 
-const routerBase = '/api'; // router base adding to every router path
+// Separate router and set its router base (to every path)
+const routerBase = '/api';
 server.use(routerBase, require('./routes/api/router'));

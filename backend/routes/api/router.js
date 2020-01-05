@@ -56,7 +56,7 @@ router.post('/user/singup', userSignupChecks, async (req, res) => {
     avatar
   });
 
-  //console.log(user.toString());
+  // console.log(user.toString());
 
   // Save user to db
   await user.save();
@@ -85,7 +85,7 @@ const userLoginChecks = [
 
 router.post('/user/login', userLoginChecks, async (req, res) => {
   // Log post request body
-  //console.log(req.body);
+  console.log(req.body);
   
   // Check if req errors
   const validErrors = validationResult(req);
