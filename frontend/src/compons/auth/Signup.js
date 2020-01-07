@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { setAlert } from '../../storage/_partials/partialsDispatcher';
+import { userSignup } from '../../storage/auth/authDispetcher';
+
 
 function Signup(props) {
 
@@ -49,23 +51,7 @@ function Signup(props) {
       return; 
     }
 
-    const opts = {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name, 
-        email, 
-        pass
-      })
-    };
-
-    const url = 'http://localhost:5000/api/user/singup';
-
-    const res = await fetch(url, opts);
-    const resBody = await res.json();
-    // console.log(resBody);
+    props.userSignup(name, email, pass);
     
   }
 
@@ -158,7 +144,8 @@ function Signup(props) {
 const mapStateToProps = rootState => {};
 
 const mapDispatcherToProps = {
-  setAlert
+  setAlert,
+  userSignup
 };
 
 export default connect(null, mapDispatcherToProps)(Signup);
