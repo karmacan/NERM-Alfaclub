@@ -1,11 +1,14 @@
 import React from 'react'; 
 
-import { useState } from 'react'; // hook
+import { useState } from 'react'; // state hook
 
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
-function Login() {
+import { connect } from 'react-redux';
+import { userLogin } from '../../storage/auth/authDispetcher';
 
+function Login(props) {
   ////////////////////////////////////////
   // STATE HOOK
 
@@ -36,27 +39,13 @@ function Login() {
   const handOnSubmit = async (ev) => {
     ev.preventDefault();
     
-    const opts = {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email, 
-        pass
-      })
-    };
-
-    const url = 'http://localhost:5000/api/user/login';
-
-    const res = await fetch(url, opts);
-    const resBody = await res.json();
-    // console.log(resBody);
-    
+    await props.userLogin(email, pass);
   }
 
   ////////////////////////////////////////
   // RETURN JSX
+
+  if (props.isAuthed) return <Redirect to="/dashboard" />
   
   return (
     <section className="case">
@@ -72,7 +61,7 @@ function Login() {
           <input 
             type="text" 
             placeholder="Email" 
-            required 
+            //required 
 
             /* Assosiate input with variable */
             name='email' /* [ev.target.name] */
@@ -85,7 +74,7 @@ function Login() {
           <input 
             type="password" 
             placeholder="Password" 
-            minLength="4" 
+            //minLength="4" 
 
             name='pass'
             value={ pass }
@@ -111,4 +100,17 @@ function Login() {
   );
 }
 
-export default Login;
+////////////////////////////////////////
+// CONNECT REDUX
+
+const mapStateToProps = rootState => {
+  return {
+    isAuthed: rootState.authReducer.isAuthed
+  };
+};
+
+const mapDispatcherToProps = {
+  userLogin
+};
+
+export default connect(mapStateToProps, mapDispatcherToProps)(Login);

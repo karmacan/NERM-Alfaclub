@@ -3,14 +3,13 @@ import React from 'react';
 import { useState } from 'react'; // hook
 
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { setAlert } from '../../storage/_partials/partialsDispatcher';
+import { setAlert } from '../../storage/_layouts/layoutsDispatcher';
 import { userSignup } from '../../storage/auth/authDispetcher';
 
-
 function Signup(props) {
-
   ////////////////////////////////////////
   // STATE HOOK
 
@@ -51,12 +50,13 @@ function Signup(props) {
       return; 
     }
 
-    props.userSignup(name, email, pass);
-    
+    await props.userSignup(name, email, pass);
   }
 
   ////////////////////////////////////////
   // RETURN JSX
+
+  if (props.isAuthed) return <Redirect to="/dashboard" />
 
   return (
     <section className="case">
@@ -72,7 +72,7 @@ function Signup(props) {
           <input 
             type="text" 
             placeholder="Name" 
-            required 
+            //required 
             autoComplete="off"
 
             /* Assosiate input with variable */
@@ -87,7 +87,7 @@ function Signup(props) {
           <input 
             type="text" 
             placeholder="Email" 
-            required 
+            //required 
 
             name='email'
             value={ email }
@@ -100,7 +100,7 @@ function Signup(props) {
           <input 
             type="password" 
             placeholder="Password" 
-            minLength="4" 
+            //minLength="4" 
 
             name='pass'
             value={ pass }
@@ -112,11 +112,11 @@ function Signup(props) {
           <input 
             type="password" 
             placeholder="Confirm Password" 
-            minLength="4" 
+            //minLength="4" 
 
             name="repass"
             value={ repass }
-            onChange={ (ev) => handOnChange(ev) }            
+            onChange={ (ev) => handOnChange(ev) }
           />
         </div>
         {/* Submit */}
@@ -141,11 +141,15 @@ function Signup(props) {
 ////////////////////////////////////////
 // CONNECT REDUX
 
-const mapStateToProps = rootState => {};
+const mapStateToProps = rootState => {
+  return {
+    isAuthed: rootState.authReducer.isAuthed
+  };
+};
 
 const mapDispatcherToProps = {
   setAlert,
   userSignup
 };
 
-export default connect(null, mapDispatcherToProps)(Signup);
+export default connect(mapStateToProps, mapDispatcherToProps)(Signup);

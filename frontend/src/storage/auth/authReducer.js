@@ -1,28 +1,34 @@
 const initialState = {
-  token: localStorage.getItem('user_token'),
   isAuthed: false,
-  isLoading: true,
+  token: localStorage.getItem('user_token'),
   user: null
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "SIGNUP_SUCCESS":
+
+    case "AUTH_SUCCESS": /* for Signup and Login */
       localStorage.setItem('user_token', action.payload.token);
+      //console.log(action.payload.token);
       return {
         ...state,
-        token: action.payload.token,
         isAuthed: true,
-        isLoading: false
+        token: action.payload.token,
       };
 
-    case "SIGNUP_FAILURE":
+    case "AUTH_FAILURE":
       localStorage.removeItem('user_token');
       return {
         ...state,
-        token: null,
         isAuthed: false,
-        isLoading: false
+        token: null,
+      };
+
+    case "USER_LOAD": /* for App */
+      return {
+        ...state,
+        isAuthed: true,
+        user: action.payload
       };
 
     default:

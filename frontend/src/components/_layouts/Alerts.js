@@ -30,7 +30,7 @@ function Alerts(props) {
 const mapStateToProps = rootState => {
   //console.log(rootState); // root reducer's state
   return {
-    alerts: rootState.partialsReducer.alerts
+    alerts: rootState.layoutsReducer.alerts
   };
 };
 

@@ -4,10 +4,12 @@ import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 import { combineReducers } from 'redux';
-import partialsReducer from './_partials/partialsReducer';
+import layoutsReducer from './_layouts/layoutsReducer';
+import authReducer from './auth/authReducer';
 
 const rootReducer = combineReducers({
-  partialsReducer
+  layoutsReducer,
+  authReducer
 });
 
 const store = createStore(

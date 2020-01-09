@@ -123,9 +123,9 @@ router.post('/user/login', userLoginChecks, async (req, res) => {
 const verifyToken = require('../../midware/api/router');
 
 ////////////////////////////////////////
-// GET USER SELF [take token, give user] (user token provided via req header)
+// LOAD USER (self) [take token, give user] (user token provided via req header)
 
-router.get('/user/self', verifyToken, async (req, res) => {
+router.get('/user/load', verifyToken, async (req, res) => {
   //console.log('Token varification completed!');
   const userId = req.userId;
   const user = await DBModelUser.findById(userId)/*without password*/.select('-pass');
