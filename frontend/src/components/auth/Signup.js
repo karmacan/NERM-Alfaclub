@@ -56,7 +56,7 @@ function Signup(props) {
   ////////////////////////////////////////
   // RETURN JSX
 
-  if (props.isAuthed) return <Redirect to="/dashboard" />
+  if (props.isAuthed) return <Redirect to="/profile/dashboard" />
 
   return (
     <section className="case">

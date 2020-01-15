@@ -56,6 +56,7 @@ export const userLogin = (email, pass) => {
 
     try {
       const res = await fetch(url, opts);
+
       const resBody = await res.json();
       
       if (resBody.errors) throw resBody /* as er in catch */;
@@ -118,6 +119,7 @@ export const userLoad = () => {
 
 export const userLogout = () => {
   return (dispatch) => {
-    dispatch({type: "AUTH_FAILURE"});
+    dispatch({type: "AUTH_FAILURE"}); /* authReducer */
+    dispatch({type: "USER_PROFILE_CLEAR"}); /* profileReducer */
   }
 }

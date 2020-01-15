@@ -143,6 +143,7 @@ const userProfileChecks = [
 
 router.post('/user/profile', [verifyToken, userProfileChecks], async (req, res) => {
   //console.log(req.body);
+  //console.log(req.body.constructor.name);
   
   const validErrors = validationResult(req);
   if (!validErrors.isEmpty()) return res.status(400).json({errors: validErrors.array()});
@@ -158,6 +159,7 @@ router.post('/user/profile', [verifyToken, userProfileChecks], async (req, res) 
 
   // Build profile object
   const _profile = {};
+  /*!!!*/_profile.webLinks = {};
 
   // Filed from header
 
@@ -167,10 +169,10 @@ router.post('/user/profile', [verifyToken, userProfileChecks], async (req, res) 
   // Filed from body
   
   // PROFESSION (*)
-  if (profession) _profile.profession = profession;
+  _profile.profession = profession;
 
   // EXP LVL (*)
-  if (expLvl) _profile.expLvl = expLvl;
+  _profile.expLvl = expLvl;
 
   // SKILLS (*)
   if (Array.isArray(skills)) {
@@ -182,7 +184,7 @@ router.post('/user/profile', [verifyToken, userProfileChecks], async (req, res) 
 
   // BIO
   if (bio) _profile.bio = bio;
-
+  
   // WEB LINKS
   if (webLinks && webLinks.github) _profile.webLinks.github = webLinks.github;
   if (webLinks && webLinks.facebook) _profile.webLinks.facebook = webLinks.facebook;
@@ -198,7 +200,7 @@ router.post('/user/profile', [verifyToken, userProfileChecks], async (req, res) 
     // Create profile
     profile = new DBModelProfile(_profile);
     await profile.save();
-    console.log('Profile created!');
+    //console.log('Profile created!');
     return res.json(profile);
   }
   else {
@@ -208,7 +210,7 @@ router.post('/user/profile', [verifyToken, userProfileChecks], async (req, res) 
       {$set: _profile},
       {new: true}
     );
-    console.log('Profile updated!');
+    //console.log('Profile updated!');
     return res.json(profile);
   }
 });

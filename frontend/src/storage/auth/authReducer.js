@@ -4,10 +4,10 @@ const initialState = {
   user: null
 };
 
-export default (state = initialState, action) => {
+function authReducer(state = initialState, action) {
   switch (action.type) {
 
-    case "AUTH_SUCCESS": /* for Signup and Login */
+    case 'AUTH_SUCCESS': /* for Signup and Login */
       localStorage.setItem('user_token', action.payload.token);
       //console.log(action.payload.token);
       return {
@@ -16,7 +16,7 @@ export default (state = initialState, action) => {
         token: action.payload.token,
       };
 
-    case "AUTH_FAILURE":
+    case 'AUTH_FAILURE':
       localStorage.removeItem('user_token');
       return {
         ...state,
@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
         token: null,
       };
 
-    case "USER_LOAD": /* for App */
+    case 'USER_LOAD': /* for App */
       return {
         ...state,
         isAuthed: true,
@@ -35,3 +35,5 @@ export default (state = initialState, action) => {
       return state;
   }
 }
+
+export default authReducer;

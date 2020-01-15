@@ -4,7 +4,7 @@ const initialState = {
   ]
 }
 
-export default (state = initialState, action) => {
+function layoutReducer(state = initialState, action) {
   switch (action.type) {
 
     case 'ALERT_DISPLAY':
@@ -28,3 +28,5 @@ export default (state = initialState, action) => {
       return state;
   }
 }
+
+export default layoutReducer;

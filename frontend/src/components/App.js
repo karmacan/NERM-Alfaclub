@@ -15,17 +15,19 @@ import Alerts from './_layouts/Alerts';
 import Welcome from './_landing/Welcome';
 import Login from './auth/Login';
 import Signup from './auth/Signup';
-import Dashboard from './dashboard/Dashboard';
+import ProfileDashboard from './profile/ProfileDashboard';
+import ProfileForm from './profile/ProfileForm';
 
 import { useEffect } from 'react'; // lifecycle hook
+
 import { userLoad } from '../storage/auth/authDispetcher';
 
 function App() {
   ////////////////////////////////////////
-  // LIFECYCLE HOOK
+  // COMPONENT DID HOOK
 
   useEffect(() => {
-    //console.log('Component Did Mount (Updated)!');
+    //console.log('Component Did Mount/Updated!');
     /*!!!*/store.dispatch(userLoad());
   }, []);
 
@@ -42,7 +44,9 @@ function App() {
           <Switch>
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/login" component={Login} />
-            <_PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <_PrivateRoute exact path="/profile/dashboard" component={ProfileDashboard} />
+            <_PrivateRoute exact path="/profile/create" component={ProfileForm} />
+            <_PrivateRoute exact path="/profile/update" component={ProfileForm} />
           </Switch>
         </Fragment>
       </Router>

@@ -6,10 +6,12 @@ import thunk from 'redux-thunk';
 import { combineReducers } from 'redux';
 import layoutsReducer from './_layouts/layoutsReducer';
 import authReducer from './auth/authReducer';
+import profileReducer from './profile/profileReducer';
 
 const rootReducer = combineReducers({
   layoutsReducer,
-  authReducer
+  authReducer,
+  profileReducer
 });
 
 const store = createStore(

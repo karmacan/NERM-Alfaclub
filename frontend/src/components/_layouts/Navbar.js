@@ -12,7 +12,7 @@ function Navbar(props) {
     if (props.isAuthed) return (
       <Fragment>
         <h1>
-          <Link to="/dashboard">
+          <Link to="/profile/dashboard">
             <i className="fas fa-code"></i>
             <span>&nbsp;Dashboard</span>
           </Link>
