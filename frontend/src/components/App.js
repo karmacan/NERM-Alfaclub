@@ -2,9 +2,6 @@ import React from 'react';
 import { Fragment } from 'react';
 import './App.css';
 
-import { Provider } from 'react-redux';
-import store from '../storage/store';
-
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { Switch } from 'react-router-dom';
@@ -17,9 +14,13 @@ import Login from './auth/Login';
 import Signup from './auth/Signup';
 import ProfileDashboard from './profile/ProfileDashboard';
 import ProfileForm from './profile/ProfileForm';
+import ProfileEduAdd from './profile/ProfileEduAdd';
+import ProfileExpAdd from './profile/ProfileExpAdd';
 
 import { useEffect } from 'react'; // lifecycle hook
 
+import { Provider } from 'react-redux';
+import store from '../storage/store';
 import { userLoad } from '../storage/auth/authDispetcher';
 
 function App() {
@@ -47,6 +48,8 @@ function App() {
             <_PrivateRoute exact path="/profile/dashboard" component={ProfileDashboard} />
             <_PrivateRoute exact path="/profile/create" component={ProfileForm} />
             <_PrivateRoute exact path="/profile/update" component={ProfileForm} />
+            <_PrivateRoute exact path="/profile/edu/add" component={ProfileEduAdd} />
+            <_PrivateRoute exact path="/profile/exp/add" component={ProfileExpAdd} />
           </Switch>
         </Fragment>
       </Router>

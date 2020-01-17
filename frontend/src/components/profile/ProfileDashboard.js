@@ -47,68 +47,10 @@ function ProfileDashboard(props) {
       <ProfileDashboardButtons />
 
       {/* Exp */}
-      <h2 className="my-1">
-        Experience Credentials
-      </h2>
-      <table className="dev-table">
-        <thead>
-          <tr>
-            <th>Company</th>
-            <th className="hidden-s">Title</th>
-            <th className="hidden-s">Years</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Apple</td>
-            <td className="hidden-s">Senior Developer</td>
-            <td className="hidden-s">
-              Oct 2011 - Current
-            </td>
-            <td>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Google</td>
-            <td className="hidden-s">Senior Developer</td>
-            <td className="hidden-s">
-              Oct 2004 - Nov 2010
-            </td>
-            <td>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <h2 className="my-1">Education Credentials</h2>
       
       {/* Edu */}
-      <h2 className="my-1">
-        Education Credentials
-      </h2>
-      <table className="dev-table">
-        <thead>
-          <tr>
-            <th>School</th>
-            <th className="hidden-s">Degree</th>
-            <th className="hidden-s">Years</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>University of Washington</td>
-            <td className="hidden-s">Masters</td>
-            <td className="hidden-s">
-              Sep 1993 - June 1999
-            </td>
-            <td>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <h2 className="my-1">Experience Credentials</h2>
 
       <div className="my-1">
         <button className="btn btn-danger">

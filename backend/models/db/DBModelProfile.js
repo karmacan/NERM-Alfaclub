@@ -20,18 +20,19 @@ const docSchema = new mongoose.Schema({
     facebook: {type: String}
   },
 
-  jobExp: [{
-    company: {type: String, required: true},
-    position: {type: String, required: true},
-    from: {type: Date, required: true},
-    to: {type: Date},
-    current: {type: Boolean, default: false},
-    desc: {type: String}
-  }],
-  
   education: [{
     place: {type: String, required: true},
     majoringIn: {type: String, required: true},
+    degree: {type: String},
+    from: {type: Date, required: true},
+    to: {type: Date},
+    current: {type: Boolean, default: false}
+  }],
+
+  jobExp: [{
+    company: {type: String, required: true},
+    position: {type: String, required: true},
+    desc: {type: String},
     from: {type: Date, required: true},
     to: {type: Date},
     current: {type: Boolean, default: false}

@@ -248,74 +248,6 @@ router.delete('/user/profile', verifyToken, async (req, res) => {
 });
 
 ////////////////////////////////////////
-// PROFILE ADD JOB EXP [take token, return profile] (user token provided via req header)
-
-const addJobExpChecks = [
-  check('company', 'Title wasn\'t provided!').not().isEmpty(),
-  check('position', 'Position wasn\'t provided!').not().isEmpty(),
-  check('from', 'From date wasn\'t provided!').not().isEmpty()
-];
-
-router.put('/user/profile/job_exp', [verifyToken, addJobExpChecks], async (req, res) => {
-  const validErrors = validationResult(req);
-  if (!validErrors.isEmpty()) return res.status(400).json({errors: validErrors.array()});
-  
-  const {
-    company,
-    position,
-    from,
-    to,
-    current,
-    desc
-  } = req.body;
-
-  const _jobExp = {
-    company,
-    position,
-    from,
-    to,
-    current,
-    desc
-  };
-
-  const profile = await DBModelProfile.findOne({user: req.userId});
-
-  if (!profile) return res.status(400).json({errors: [{msg: 'Profile doesn\'t exist!'}]})
-
-  profile.jobExp.unshift(_jobExp); // unshift == push first
-
-  await profile.save();
-
-  return res.json(profile);
-});
-
-////////////////////////////////////////
-// PROFILE DELETE JOB EXP [take token, return profile] (user token provided via req header)
-
-router.delete('/user/profile/job_exp/:job_exp_id', verifyToken, async (req, res) => {
-  const profile = await DBModelProfile.findOne({user: req.userId});
-  
-  if (!profile) return res.status(400).json({errors: [{msg: 'Profile doesn\'t exist!'}]})
-
-  // Retain only ids
-  const jobExpIds = profile.jobExp.map(item => item._id);
-
-  if (!jobExpIds) return res.status(400).json({errors: [{msg: 'No jobs for delete!'}]})
-
-  // Get id index
-  const targetIdIndex = jobExpIds.indexOf(req.params.job_exp_id);
-  
-  if (targetIdIndex == -1) return res.status(400).json({errors: [{msg: 'No target for delete!'}]})
-
-  // Splice original
-  profile.jobExp.splice(targetIdIndex, 1);
-
-  await profile.save();
-
-  return res.json(profile);
-});
-
-////////////////////////////////////////
 // PROFILE ADD EDUCATION [take token, return profile] (user token provided via req header)
 
 const addEducationChecks = [
@@ -324,21 +256,26 @@ const addEducationChecks = [
   check('from', 'From date wasn\'t provided!').not().isEmpty()
 ];
 
-router.put('/user/profile/education', [verifyToken, addEducationChecks], async (req, res) => {
+router.put('/user/profile/education', [verifyToken, addEducationChecks], async (req, res) => {  
   const validErrors = validationResult(req);
   if (!validErrors.isEmpty()) return res.status(400).json({errors: validErrors.array()});
-  
+
   const {
     place,
     majoringIn,
+    degree,
     from,
     to,
     current
   } = req.body;
 
+  if (to === '' && current === false) return res.status(400).json({errors: [{msg: 'Specify the end time!'}]});
+  // Irrelevant time check
+
   const _education = {
     place,
     majoringIn,
+    degree,
     from,
     to,
     current
@@ -375,6 +312,77 @@ router.delete('/user/profile/education/:education_id', verifyToken, async (req, 
 
   // Splice original
   profile.education.splice(targetIdIndex, 1);
+
+  await profile.save();
+
+  return res.json(profile);
+});
+
+////////////////////////////////////////
+// PROFILE ADD JOB EXP [take token, return profile] (user token provided via req header)
+
+const addJobExpChecks = [
+  check('company', 'Title wasn\'t provided!').not().isEmpty(),
+  check('position', 'Position wasn\'t provided!').not().isEmpty(),
+  check('from', 'From date wasn\'t provided!').not().isEmpty()
+];
+
+router.put('/user/profile/job_exp', [verifyToken, addJobExpChecks], async (req, res) => {
+  const validErrors = validationResult(req);
+  if (!validErrors.isEmpty()) return res.status(400).json({errors: validErrors.array()});
+  
+  const {
+    company,
+    position,
+    desc,
+    from,
+    to,
+    current
+  } = req.body;
+
+  if (to === '' && current === false) return res.status(400).json({errors: [{msg: 'Specify the end time!'}]});
+  // Irrelevant time check
+
+  const _jobExp = {
+    company,
+    position,
+    desc,
+    from,
+    to,
+    current
+  };
+
+  const profile = await DBModelProfile.findOne({user: req.userId});
+
+  if (!profile) return res.status(400).json({errors: [{msg: 'Profile doesn\'t exist!'}]})
+
+  profile.jobExp.unshift(_jobExp); // unshift == push first
+
+  await profile.save();
+
+  return res.json(profile);
+});
+
+////////////////////////////////////////
+// PROFILE DELETE JOB EXP [take token, return profile] (user token provided via req header)
+
+router.delete('/user/profile/job_exp/:job_exp_id', verifyToken, async (req, res) => {
+  const profile = await DBModelProfile.findOne({user: req.userId});
+  
+  if (!profile) return res.status(400).json({errors: [{msg: 'Profile doesn\'t exist!'}]})
+
+  // Retain only ids
+  const jobExpIds = profile.jobExp.map(item => item._id);
+
+  if (!jobExpIds) return res.status(400).json({errors: [{msg: 'No jobs for delete!'}]})
+
+  // Get id index
+  const targetIdIndex = jobExpIds.indexOf(req.params.job_exp_id);
+  
+  if (targetIdIndex == -1) return res.status(400).json({errors: [{msg: 'No target for delete!'}]})
+
+  // Splice original
+  profile.jobExp.splice(targetIdIndex, 1);
 
   await profile.save();
 

@@ -75,3 +75,75 @@ export const profilePost = (formData, history, isEdit = false) => {
     }
   };
 }
+
+export const eduAdd = (formData, history) => {
+  return async (dispatch) => {
+    const url = 'http://localhost:5000/api/user/profile/education';
+    const opts = {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        'user-token': localStorage.getItem('user_token')
+      },
+      body: JSON.stringify(formData)
+    };
+    try {
+      const res = await fetch(url, opts);
+      const resBody = await res.json();
+
+      if (resBody.errors) throw resBody;
+
+      dispatch({
+        type: 'ADD_TO_PROFILE',
+        payload: resBody
+      });
+
+      dispatch(setAlert('success', 'Education added!'));
+
+      /*REDIRECT*/ history.push('/profile/dashboard');
+    }
+    catch (er) {
+      if (er.errors !== undefined) {
+        er.errors.forEach(error => 
+          dispatch(setAlert('danger', error.msg))
+        );
+      }
+    }
+  }
+}
+
+export const expAdd = (formData, history) => {
+  return async (dispatch) => {
+    const url = 'http://localhost:5000/api/user/profile/job_exp';
+    const opts = {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        'user-token': localStorage.getItem('user_token')
+      },
+      body: JSON.stringify(formData)
+    };
+    try {
+      const res = await fetch(url, opts);
+      const resBody = await res.json();
+
+      if (resBody.errors) throw resBody;
+
+      dispatch({
+        type: 'ADD_TO_PROFILE',
+        payload: resBody
+      });
+
+      dispatch(setAlert('success', 'Expirience added!'));
+
+      /*REDIRECT*/ history.push('/profile/dashboard');
+    }
+    catch (er) {
+      if (er.errors !== undefined) {
+        er.errors.forEach(error => 
+          dispatch(setAlert('danger', error.msg))
+        );
+      }
+    }
+  }
+}

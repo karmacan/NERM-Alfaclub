@@ -8,13 +8,13 @@ function DashboardButtons() {
         <i className="fas fa-user-circle txt-primary" style={{float: 'left'}}></i>
         &nbsp;Update Profile
       </Link>
-      <Link to="/exp/add" className="btn btn-gray mx-1" style={{textAlign: 'center'}}>
-        <i className="fab fa-black-tie txt-primary" style={{float: 'left'}}></i> 
-        &nbsp;Add Experience
-      </Link>
-      <Link to="/edu/add" className="btn btn-gray mx-1" style={{textAlign: 'center'}}>
+      <Link to="/profile/edu/add" className="btn btn-gray mx-1" style={{textAlign: 'center'}}>
         <i className="fas fa-graduation-cap txt-primary" style={{float: 'left'}}></i> 
         &nbsp;Add Education
+      </Link>
+      <Link to="/profile/exp/add" className="btn btn-gray mx-1" style={{textAlign: 'center'}}>
+        <i className="fab fa-black-tie txt-primary" style={{float: 'left'}}></i> 
+        &nbsp;Add Experience
       </Link>
     </div>
   );
