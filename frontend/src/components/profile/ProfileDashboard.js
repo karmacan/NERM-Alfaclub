@@ -8,13 +8,33 @@ import { useEffect } from 'react'; // lifecycle hook
 
 import Spinner from '../_layouts/Spinner';
 
+import ProfileEduTable from './ProfileEduTable';
+import ProfileExpTable from './ProfileExpTable';
+
 import { connect } from 'react-redux';
 import { profileGet } from '../../storage/profile/profileDispatcher';
+import { profileDelete } from '../../storage/profile/profileDispatcher';
 
 function ProfileDashboard(props) {
   useEffect(() => {
+    //console.log(props.profile.currentProfile);
     props.profileGet();
   }, []);
+
+  ////////////////////////////////////////
+  // DYNAMIC MARKUP
+
+  const ifProfileEdu = () => {
+    if (props.profile.currentProfile.education.length !== 0) {
+      return <ProfileEduTable profile={props.profile} />;
+    }
+  }
+
+  const ifProfileExp = () => {
+    if (props.profile.currentProfile.jobExp.length !== 0) {
+      return <ProfileExpTable profile={props.profile} />;
+    }
+  }
 
   ////////////////////////////////////////
   // RETURN JSX
@@ -46,14 +66,17 @@ function ProfileDashboard(props) {
       {/* Dashboard Buttons */}
       <ProfileDashboardButtons />
 
-      {/* Exp */}
-      <h2 className="my-1">Education Credentials</h2>
-      
       {/* Edu */}
-      <h2 className="my-1">Experience Credentials</h2>
+      { ifProfileEdu() }
+      
+      {/* Exp */}
+      { ifProfileExp() }
 
       <div className="my-1">
-        <button className="btn btn-danger">
+        <button 
+          className="btn btn-danger"
+          onClick={() => props.profileDelete()}
+          >
           <i className="fas fa-user-minus"></i> 
           &nbsp;Delete My Profile
         </button>
@@ -72,7 +95,8 @@ const mapStateToProps = (rootState) => ({
 });
 
 const mapDispatcherToProps = {
-  profileGet
+  profileGet,
+  profileDelete
 };
 
 export default connect(mapStateToProps, mapDispatcherToProps)(ProfileDashboard);

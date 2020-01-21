@@ -232,16 +232,17 @@ router.get('/user/profile', verifyToken, async (req, res) => {
 });
 
 ////////////////////////////////////////
-// DELETE PROFILE WITH USER [take token, give message] (user token provided via req header)
+// DELETE PROFILE (without user) [take token, give message] (user token provided via req header)
 
 router.delete('/user/profile', verifyToken, async (req, res) => {
   try {
     // Remove user profile
     await DBModelProfile.findOneAndRemove({user: req.userId});
-    // Remov user
-    await DBModelUser.findOneAndRemove({_id: req.userId})
+    
+    // Remove user
+    //await DBModelUser.findOneAndRemove({_id: req.userId})
 
-    return res.send('Delete user with profile complete!');
+    return res.send('Profile deleted successfully!');
   } catch (err) {
     return res.status(500).send(err.message);
   }

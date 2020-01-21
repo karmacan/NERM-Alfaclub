@@ -109,7 +109,7 @@ function ProfileEduAdd(props) {
         </div>
         {/* Current */}
         <div className="dev-form-field">
-          <p>Current Job</p>
+          <p>Current Student</p>
           <input 
             type="checkbox" 
             name="current" 

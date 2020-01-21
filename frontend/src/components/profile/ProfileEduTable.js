@@ -1,29 +1,31 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-function ProfileEduTable() {
+import shortid from 'shortid';
+import ProfileEduTableBody from './ProfileEduTableBody';
+
+function ProfileEduTable(props) {
+  const mapProfileEducation = () => {
+    return props.profile.currentProfile.education.map(edu => <ProfileEduTableBody key={shortid.generate()} edu={edu} />);
+  }
+
   return (
-    <table className="dev-table">
-        <thead>
-          <tr>
-            <th>School</th>
-            <th className="hidden-s">Degree</th>
-            <th className="hidden-s">Years</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>University of Washington</td>
-            <td className="hidden-s">Masters</td>
-            <td className="hidden-s">
-              Sep 1993 - June 1999
-            </td>
-            <td>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <Fragment>
+      <h2 className="my-1">Education Credentials</h2>
+      <table className="dev-table my-1">
+          <thead>
+            <tr>
+              <th>School</th>
+              <th className="hidden-s">Majoring In</th>
+              <th className="hidden-s">Degree</th>
+              <th className="hidden-s">Years</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            { mapProfileEducation() }
+          </tbody>
+        </table>
+      </Fragment>
   );
 }
 

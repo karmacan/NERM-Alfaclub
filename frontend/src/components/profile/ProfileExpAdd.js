@@ -35,7 +35,7 @@ function ProfileExpAdd(props) {
 
   const handOnSubmit = (ev) => {
     ev.preventDefault();
-    props.eduAdd(formData, props.history);
+    props.expAdd(formData, props.history);
   }
 
   return (

@@ -531,8 +531,8 @@ ul {
 .grid-profile-unit {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 2fr 4fr 2fr;
-      grid-template-columns: 2fr 4fr 2fr;
+  -ms-grid-columns: 2fr 3fr 2fr 2fr;
+      grid-template-columns: 2fr 3fr 2fr 2fr;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -661,6 +661,10 @@ ul {
   text-align: center;
 }
 
+/********************************************************************************/
+/* MEDIA */
+/********************************************************************************/
+
 @media (max-width: 500px) {
   .hidden-s {
     display: none;
@@ -711,6 +715,14 @@ ul {
   .grid-profile-unit {
     -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
+        grid-gap: 0;
+  }
+  .grid-profile-unit .img {
+    margin: auto;
+  }
+  .grid-profile-unit > div {
+    margin-top: 0.4rem;
+    text-align: center;
   }
   .grid-profile {
         grid-template-areas: 'info' 'about' 'exp' 'edu' 'repos';

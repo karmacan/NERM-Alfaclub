@@ -1,39 +1,31 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-function ProfileExpTable() {
+import shortid from 'shortid';
+import ProfileExpTableBody from './ProfileExpTableBody';
+
+function ProfileExpTable(props) {
+  const mapProfileJobExp = () => {
+    return props.profile.currentProfile.jobExp.map(exp => <ProfileExpTableBody key={shortid.generate()} exp={exp} />);
+  }
+
   return (
-    <table className="dev-table">
+    <Fragment>
+      <h2 className="my-1">Experience Credentials</h2>
+      <table className="dev-table my-1">
         <thead>
           <tr>
             <th>Company</th>
             <th className="hidden-s">Title</th>
+            <th className="hidden-s">Description</th>
             <th className="hidden-s">Years</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Apple</td>
-            <td className="hidden-s">Senior Developer</td>
-            <td className="hidden-s">
-              Oct 2011 - Current
-            </td>
-            <td>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Google</td>
-            <td className="hidden-s">Senior Developer</td>
-            <td className="hidden-s">
-              Oct 2004 - Nov 2010
-            </td>
-            <td>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
+          { mapProfileJobExp() }
         </tbody>
       </table>
+    </Fragment>
   );
 }
 

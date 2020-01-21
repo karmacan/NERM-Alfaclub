@@ -120,6 +120,6 @@ export const userLoad = () => {
 export const userLogout = () => {
   return (dispatch) => {
     dispatch({type: "AUTH_FAILURE"}); /* authReducer */
-    dispatch({type: "USER_PROFILE_CLEAR"}); /* profileReducer */
+    dispatch({type: "USER_PROFILE_LOGOUT"}); /* profileReducer */
   }
 }
