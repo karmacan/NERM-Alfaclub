@@ -23,7 +23,7 @@ function ProfileList(props) {
 
   return (
     <section className="case">
-      { console.log(props.profile.profiles) }
+      {/* { console.log(props.profile.profiles) } */}
       <h1 className="txt-l txt-primary">
         Developer Profiles
       </h1>

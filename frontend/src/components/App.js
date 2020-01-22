@@ -17,6 +17,7 @@ import ProfileForm from './profile/ProfileForm';
 import ProfileEduAdd from './profile/ProfileEduAdd';
 import ProfileExpAdd from './profile/ProfileExpAdd';
 import ProfileList from './profile/ProfileList';
+import ProfileView from './profile/ProfileView';
 
 import { useEffect } from 'react'; // lifecycle hook
 
@@ -52,6 +53,7 @@ function App() {
             <_PrivateRoute exact path="/profile/edu/add" component={ProfileEduAdd} />
             <_PrivateRoute exact path="/profile/exp/add" component={ProfileExpAdd} />
             <Route exact path="/profiles" component={ProfileList} />
+            <Route exact path="/profile/:user_id" component={ProfileView} />
           </Switch>
         </Fragment>
       </Router>

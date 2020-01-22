@@ -29,6 +29,7 @@ function ProfileListUnit(props) {
     <div className="grid-profile-unit bg-light">
       {/* Avatar */}
       <img 
+        alt=""
         src={ gravatar } 
         className="img img-round" 
       />

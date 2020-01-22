@@ -20,12 +20,8 @@ function ProfileExpTableBody(props) {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const _from = new Date(from);
     const _to = new Date(to);
-    if (!current) {
-      return `${months[_from.getMonth()]} ${_from.getYear()} - ${_to.getMonth()}.${_to.getYear()}`;
-    }
-    else {
-      return `${months[_from.getMonth()]} ${_from.getYear()} - Current`;
-    }
+    if (!current) return `${months[_from.getMonth()]} ${_from.getYear() + 1900} - ${months[_to.getMonth()]} ${_to.getYear() + 1900}`;
+    else return `${months[_from.getMonth()]} ${_from.getYear() + 1900} - Current`;
   }
 
   const handOnDeleteClick = () => {

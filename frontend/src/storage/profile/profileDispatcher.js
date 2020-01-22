@@ -254,9 +254,9 @@ export const profilesGet = () => {
   };
 }
 
-export const profileGetById = (userId) => {
+export const profileGetByUserId = (userId) => {
   return async (dispatch) => {
-    const url = `http://localhost:5000/api/user/profile/${userId}`;
+    const url = `http://localhost:5000/api/profile/${userId}`;
     try {
       const res = await fetch(url);
       const resBody = await res.json();

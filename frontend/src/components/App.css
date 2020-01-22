@@ -546,7 +546,7 @@ ul {
   margin-top: 0.5rem;
   display: -ms-grid;
   display: grid;
-      grid-template-areas: 'info info' 'about about' 'exp edu' 'repos repos';
+      grid-template-areas: 'info info' 'about about' 'edu exp' 'repos repos';
   grid-gap: 1rem;
 }
 
@@ -725,10 +725,14 @@ ul {
     text-align: center;
   }
   .grid-profile {
-        grid-template-areas: 'info' 'about' 'exp' 'edu' 'repos';
+        grid-template-areas: 'info' 'about' 'edu' 'exp' 'repos';
   }
   .grid-profile-info {
-    display: block;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .grid-profile-info .img {
+    margin: auto;
   }
   .grid-profile-about .dev-skills {
     display: -webkit-box;
