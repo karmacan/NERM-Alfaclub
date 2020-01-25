@@ -277,23 +277,23 @@ export const profileGetByUserId = (userId) => {
   };
 }
 
-// export const getGithubRepos = (user) => {
-//   return async (dispatch) => {
-//     const url = `http://localhost:5000/api/github/${githubUsername}/repos`;
-//     try {
-//       const res = await fetch(url);
-//       const resBody = await res.json();
-//       //console.log(resBody);
-//       dispatch({
-//         type: 'GET_GITHUB_REPOS',
-//         payload: resBody
-//       });
-//     }
-//     catch (er) {
-//       dispatch({
-//         type: 'USER_PROFILE_ERROR',
-//         payload: er
-//       });
-//     }
-//   };
-// }
+export const getGithubRepos = (githubUsername) => {
+  return async (dispatch) => {
+    const url = `http://localhost:5000/api/github/${githubUsername}/repos`;
+    try {
+      const res = await fetch(url);
+      const resBody = await res.json();
+      //console.log(resBody);
+      dispatch({
+        type: 'GET_GITHUB_REPOS',
+        payload: resBody
+      });
+    }
+    catch (er) {
+      dispatch({
+        type: 'USER_PROFILE_ERROR',
+        payload: er
+      });
+    }
+  };
+}

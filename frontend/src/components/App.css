@@ -657,6 +657,26 @@ ul {
           align-items: center;
 }
 
+.dev-post-btns {
+  display: flex;
+  align-items: center;
+  justify-items: flex-start;
+}
+
+.dev-post-btns > button, .dev-post-btns > div.card {
+  margin: 0.3rem 0 0.3rem 0.3rem; /* T R B L */
+  font-size: 1rem;
+}
+
+.dev-post-btns > i {
+  font-size: 1rem;
+}
+
+.dev-post-btns > div.card {
+  margin-left: auto;
+  padding: 8px 16px;
+}
+
 .dev-post > :first-child, .dev-comment > :first-child {
   text-align: center;
 }
@@ -746,5 +766,6 @@ ul {
   .dev-post, .dev-comment {
     -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
+        grid-gap: 0;
   }
 }

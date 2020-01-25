@@ -7,11 +7,13 @@ import { combineReducers } from 'redux';
 import layoutsReducer from './_layouts/layoutsReducer';
 import authReducer from './auth/authReducer';
 import profileReducer from './profile/profileReducer';
+import postReducer from './post/PostReducer';
 
 const rootReducer = combineReducers({
   layoutsReducer,
   authReducer,
-  profileReducer
+  profileReducer,
+  postReducer
 });
 
 const store = createStore(

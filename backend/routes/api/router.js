@@ -85,7 +85,7 @@ const userLoginChecks = [
 
 router.post('/user/login', userLoginChecks, async (req, res) => {
   // Log post request body
-  console.log(req.body);
+  //console.log(req.body);
   
   // Check if req errors
   const validErrors = validationResult(req);
@@ -397,6 +397,14 @@ router.delete('/user/profile/job_exp/:job_exp_id', verifyToken, async (req, res)
 const DBModelPost = require('../../models/db/DBModelPost');
 
 ////////////////////////////////////////
+// GET ALL POSTS [take token, give posts] (user token provided via req header)
+
+router.get('/posts', verifyToken, async (req, res) => {
+  const posts = await DBModelPost.find().sort({date: -1});
+  return res.json(posts);
+});
+
+////////////////////////////////////////
 // GET ONE POST [take token and id, give posts] (user id provided via req path param)
 
 router.get('/post/:post_id', async (req, res) => {
@@ -414,15 +422,7 @@ router.get('/post/:post_id', async (req, res) => {
 });
 
 ////////////////////////////////////////
-// GET ALL POSTS [take token, give posts] (user token provided via req header)
-
-router.get('/posts', verifyToken, async (req, res) => {
-  const posts = await DBModelPost.find().sort({date: -1});
-  res.json(posts);
-});
-
-////////////////////////////////////////
-// CREATE POST [take token and text, give post] (user token provided via req header, text via req body)
+// SUBMIT POST [take token and text, give posts] (user token provided via req header, text via req body)
 
 createPostChecks = [
   check('text', 'Text wasn\'t provided!').not().isEmpty()
@@ -445,13 +445,15 @@ router.post('/user/post', [verifyToken, createPostChecks], async (req, res) => {
 
   const _post = new DBModelPost(__post);
 
-  const post = await _post.save();
+  await _post.save();
 
-  return res.json(post);
+  //return res.json(post);
+  const posts = await DBModelPost.find().sort({ date: -1 });
+  return res.json(posts);
 });
 
 ////////////////////////////////////////
-// DELETE POST [take token, give message] (user token provided via req header)
+// DELETE POST [take token, give posts] (user token provided via req header)
 
 router.delete('/user/post/:post_id', verifyToken, async (req, res) => {
   const post = await DBModelPost.findById(req.params.post_id);
@@ -461,44 +463,33 @@ router.delete('/user/post/:post_id', verifyToken, async (req, res) => {
   
   await post.remove();
 
-  return res.send('Post successfully removed!');
+  //return res.send('Post successfully removed!');
+  const posts = await DBModelPost.find().sort({ date: -1 });
+  return res.json(posts);
 });
 
 ////////////////////////////////////////
-// POST LIKE [take token, give post likes]
+// POST LIKE [take token, give posts]
 
 router.put('/user/post/:post_id/like', verifyToken, async (req, res) => {
   try {
     const post = await DBModelPost.findById(req.params.post_id);
-    const user = post.likes.find(like => like.user.toString() === req.userId);
-    if (user) return res.status(400).json({errors: [{msg: 'Post has already liked!'}]});
+    const like = post.likes.find(like => like.user.toString() === req.userId);
     
-    post.likes.unshift({user: req.userId});
-    
+    // If liked then unlike
+    if (like) {
+      const likeInd = post.likes.indexOf(like);
+      post.likes.splice(likeInd, 1);
+    }
+    else {
+      post.likes.unshift({ user: req.userId }); // unshift === push first
+    }
+
     await post.save();
-    return res.json(post.likes);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
+    //return res.json(post.likes);
 
-////////////////////////////////////////
-// POST UNLIKE [take token, give post likes]
-
-router.put('/user/post/:post_id/unlike', verifyToken, async (req, res) => {
-  try {
-    const post = await DBModelPost.findById(req.params.post_id);
-    const user = post.likes.find(like => like.user.toString() === req.userId);
-    if (!user) return res.status(400).json({errors: [{msg: 'Post hasn\'t been liked!'}]});
-    
-    const likeInd = post.likes
-      .map(like => like.user.toString())
-      .indexOf(req.userId);
-
-    post.likes.splice(likeInd, 1);
-    
-    await post.save();
-    return res.json(post.likes);
+    const posts = await DBModelPost.find().sort({ date: -1 });
+    return res.json(posts);
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -578,6 +569,16 @@ router.delete('/user/post/:post_id/comment/:comment_id', verifyToken, async (req
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////
+// GET PROFILES [give all]
+
+router.get('/profiles', async (req, res) => {
+  let profiles = await DBModelProfile
+    .find()
+    .populate(/*originField*/ 'user', /*includedFields*/ ['name', 'avatar']);
+  res.json(profiles);
+});
+
+////////////////////////////////////////
 // GET PROFILE [give one] (user id provided via req path param)
 
 router.get('/profile/:user_id', async (req, res) => {
@@ -595,16 +596,6 @@ router.get('/profile/:user_id', async (req, res) => {
     if (err.kind == 'ObjectId') return res.status(400).json({errors: [{msg: 'Profile doesn\'t exist!'}]});
     else return res.status(500).send('Get profile by id server error!');
   }
-});
-
-////////////////////////////////////////
-// GET PROFILES [give all]
-
-router.get('/profiles', async (req, res) => {
-  let profiles = await DBModelProfile
-    .find()
-    .populate(/*originField*/ 'user', /*includedFields*/ ['name', 'avatar']);
-  res.json(profiles);
 });
 
 ////////////////////////////////////////

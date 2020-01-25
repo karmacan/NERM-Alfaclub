@@ -3,7 +3,8 @@ const initialState = {
   error: {},
   currentProfile: null, /* for current or visiting */
   profiles: [], /* fro public ones */
-  repos: [] /* for github ones */
+  isReposFetched: false,
+  repos: null /* for github ones */
 };
 
 function profileReducer(state = initialState, action) {
@@ -51,6 +52,7 @@ function profileReducer(state = initialState, action) {
     case 'GET_GITHUB_REPOS':
       return {
         ...state,
+        isReposFetched: true,
         repos: action.payload,
         isLoading: false
       };

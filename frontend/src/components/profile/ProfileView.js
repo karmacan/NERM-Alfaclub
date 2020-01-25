@@ -8,11 +8,15 @@ import Spinner from '../_layouts/Spinner';
 
 import { connect } from 'react-redux';
 import { profileGetByUserId } from '../../storage/profile/profileDispatcher';
+import { getGithubRepos } from '../../storage/profile/profileDispatcher';
 
 class ProfileView extends React.Component {
   componentDidMount() {
     this.props.profileGetByUserId(this.props.match.params.user_id);
   }
+
+  ////////////////////////////////////////
+  // DYNAMIC RENDER
 
   ifWebLinks = () => {
     try {
@@ -72,7 +76,7 @@ class ProfileView extends React.Component {
       const { skills } = this.props.profile.currentProfile;
       return skills.map(skill => (
         <div className="p-1" key={shortid.generate()}>
-          <i className="fas fa-star"></i>
+          <i className="fas fa-check-circle"></i>
           &nbsp;{ skill }
         </div>
       ));
@@ -143,6 +147,94 @@ class ProfileView extends React.Component {
     }
   }
 
+  getGithubUsername = () => {
+    try {
+      const { webLinks: { github } } = this.props.profile.currentProfile;
+      if (github === null || github === '') return '';
+      const urlParts = github.split('/');
+      //console.log(urlParts);
+      return urlParts[3];
+    }
+    catch (er) {
+      return '';
+    }
+  }
+
+  ifGithubMapRepos = (githubUsername) => {
+    // Check if github not provided
+    if (githubUsername === '') return (
+      <div>
+        <h2 className="txt-primary my-1">
+          <i className="fab fa-github"></i>
+          &nbsp;Github Repos
+        </h2>
+        <p className="txt-m">Oops, looks like user hasn't specified the github account...</p>
+      </div>
+    );
+
+    // Get repos (catch reducer refresh loop)
+    if (!this.props.profile.isReposFetched) this.props.getGithubRepos(githubUsername);
+    
+    // Catch further code execution
+    if (this.props.profile.repos === null) return;
+    
+    // Check if github doesn't have repos
+    if (this.props.profile.repos.lenght === 0) return (
+      <div>
+        <h2 className="txt-primary my-1">
+          <i className="fab fa-github"></i>
+          &nbsp;Github Repos
+        </h2>
+        <p className="txt-m">Hm, looks like user doesn't have any repos yet...</p>
+      </div>
+    );
+
+    // Map repos
+    const xRepos = this.props.profile.repos.map(repo => (
+      <div className="grid-profile-repos-unit card my-1 p-1" key={shortid.generate()}>
+        {/* { console.log(repo) } */}
+        <div>
+          <h4>
+            <a href={ repo.html_url }>
+              { repo.name }
+            </a>
+          </h4>
+          <p>{ repo.description }</p>
+        </div>
+        {/* Repo Stats */}
+        <div>
+          <ul>
+            <li className="badge badge-dark">
+              <i className="fas fa-star"></i>
+              &nbsp;{ repo.stargazers_count }
+            </li>
+            <li className="badge badge-primary">
+              <i className="fas fa-eye"></i>
+              &nbsp;{ repo.watchers_count }
+            </li>
+            <li className="badge badge-light">
+              <i className="fa fa-code-fork"></i>
+              &nbsp;{ repo.forks_count }
+            </li>
+          </ul>
+        </div>
+      </div>
+    ));
+
+    return (
+      <div className="grid-profile-repos">
+        <h2 className="txt-primary my-1">
+          <i className="fab fa-github"></i>
+          &nbsp;Github Repos
+        </h2>
+        { xRepos }
+      </div>
+    );
+  }
+
+  ////////////////////////////////////////
+  // RENDER RETURN
+
   render() {
     try {
       if (this.props.profile.isLoading) return <Spinner />;
@@ -157,16 +249,18 @@ class ProfileView extends React.Component {
         expLvl
       } = this.props.profile.currentProfile;
     
+      const githubUsername = this.getGithubUsername();
 
       return (
         <section className="case">
-          { console.log(this.props.profile.currentProfile) }
+          {/* { console.log(this.props.profile.currentProfile) } */}
           <Link to="/profiles" className="btn btn-gray">
             <i className="fas fa-chevron-left"></i>
             &nbsp;Back To Profiles
           </Link>
     
           <div className="grid-profile">
+          
             {/* INFO */}
             <div className="grid-profile-info bg-primary p-2">
               <div className="mx-1">
@@ -205,49 +299,14 @@ class ProfileView extends React.Component {
             { this.ifExpThenMap() }
     
             {/* REPOS */}
-            <div className="grid-profile-repos">
-              <h2 className="txt-primary my-1">
-                <i className="fab fa-github"></i>
-                &nbsp;Github Repos
-              </h2>
-              {/* Repo 1 */}
-              <div className="grid-profile-repos-unit card my-1 p-1">
-                <div>
-                  <h4><Link to="#">Repo One</Link></h4>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, tenetur.</p>
-                </div>
-                {/* Repo Stats */}
-                <div>
-                  <ul>
-                    <li className="badge badge-primary">Stars: 44</li>
-                    <li className="badge badge-dark">Watchers: 20</li>
-                    <li className="badge badge-light">Forks: 25</li>
-                  </ul>
-                </div>
-              </div>
-              {/* Repo 2 */}
-              <div className="grid-profile-repos-unit card my-1 p-1">
-                <div>
-                  <h4><Link to="#">Repo Two</Link></h4>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, tenetur.</p>
-                </div>
-                {/* Repo Stats */}
-                <div>
-                  <ul>
-                    <li className="badge badge-primary">Stars: 44</li>
-                    <li className="badge badge-dark">Watchers: 20</li>
-                    <li className="badge badge-light">Forks: 25</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            { this.ifGithubMapRepos(githubUsername) }
     
           </div>
         </section>
       );
     }
     catch (er) {
-      //console.log(er);
+      // console.log(er);
       return <Spinner />;
     }
   }
@@ -259,7 +318,8 @@ const mapStateToProps = (rootState) => ({
 });
 
 const mapDispetcherToProps = {
-  profileGetByUserId
+  profileGetByUserId,
+  getGithubRepos
 };
 
 export default connect(mapStateToProps, mapDispetcherToProps)(ProfileView);

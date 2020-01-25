@@ -5,7 +5,7 @@ import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { Switch } from 'react-router-dom';
-import _PrivateRoute from './_routing/PrivateRoute';
+import PrivateRoute from './_routing/PrivateRoute';
 
 import Navbar from './_layouts/Navbar';
 import Alerts from './_layouts/Alerts';
@@ -18,6 +18,7 @@ import ProfileEduAdd from './profile/ProfileEduAdd';
 import ProfileExpAdd from './profile/ProfileExpAdd';
 import ProfileList from './profile/ProfileList';
 import ProfileView from './profile/ProfileView';
+import PostList from './post/PostList';
 
 import { useEffect } from 'react'; // lifecycle hook
 
@@ -47,13 +48,14 @@ function App() {
           <Switch>
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/login" component={Login} />
-            <_PrivateRoute exact path="/profile/dashboard" component={ProfileDashboard} />
-            <_PrivateRoute exact path="/profile/create" component={ProfileForm} />
-            <_PrivateRoute exact path="/profile/update" component={ProfileForm} />
-            <_PrivateRoute exact path="/profile/edu/add" component={ProfileEduAdd} />
-            <_PrivateRoute exact path="/profile/exp/add" component={ProfileExpAdd} />
+            {/*dev*/}<PrivateRoute exact path="/profile/dashboard" component={ProfileDashboard} />
+            {/*dev*/}<PrivateRoute exact path="/profile/create" component={ProfileForm} />
+            {/*dev*/}<PrivateRoute exact path="/profile/update" component={ProfileForm} />
+            {/*dev*/}<PrivateRoute exact path="/profile/edu/add" component={ProfileEduAdd} />
+            {/*dev*/}<PrivateRoute exact path="/profile/exp/add" component={ProfileExpAdd} />
             <Route exact path="/profiles" component={ProfileList} />
             <Route exact path="/profile/:user_id" component={ProfileView} />
+            {/*dev*/}<PrivateRoute exact path="/posts" component={PostList} />
           </Switch>
         </Fragment>
       </Router>

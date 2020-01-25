@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const docSchema = new Schema({
   user: {type: Schema.Types.ObjectId, ref: 'users'},
   userName: {type: String},
+  avatar: { type: String },
   text: {type: String, required: true},
-  avatar: {type: String},
   date: {type: Date, default: Date.now()},
   likes: [
     {user: {type: Schema.Types.ObjectId, ref: 'users'}}
