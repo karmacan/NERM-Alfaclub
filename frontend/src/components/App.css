@@ -278,6 +278,15 @@
   background: #bfbfbf;
 }
 
+.btn-dark {
+  background: #444;
+  color: #eee;
+}
+
+.btn-dark:hover {
+  background: #111;
+}
+
 .btn-danger {
   background: #dc3545;
   color: #fff;
@@ -657,19 +666,27 @@ ul {
           align-items: center;
 }
 
-.dev-post-btns {
+.dev-post-btns,
+.dev-comment-btns {
   display: flex;
   align-items: center;
   justify-items: flex-start;
 }
 
-.dev-post-btns > button, .dev-post-btns > div.card {
+.dev-post-btns > button, 
+.dev-post-btns > div.card,
+.dev-comment-btns > button {
   margin: 0.3rem 0 0.3rem 0.3rem; /* T R B L */
   font-size: 1rem;
 }
 
-.dev-post-btns > i {
+.dev-post-btns > i,
+.dev-comment-btns > i {
   font-size: 1rem;
+}
+
+.dev-comment-btns > button {
+  margin-left: auto;
 }
 
 .dev-post-btns > div.card {

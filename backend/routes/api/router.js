@@ -488,18 +488,17 @@ router.put('/user/post/:post_id/like', verifyToken, async (req, res) => {
     await post.save();
     //return res.json(post.likes);
 
-    const posts = await DBModelPost.find().sort({ date: -1 });
-    return res.json(posts);
+    return res.json(post);
   } catch (err) {
     res.status(500).send(err.message);
   }
 });
 
 ////////////////////////////////////////
-// POST ADD COMMENT [take token, give post comments]
+// POST ADD COMMENT [take token, give post]
 
 const postCommentChecks = [
-  check('text', 'Text wasn\'t provided!')
+  check('text', 'Text wasn\'t provided!').not().isEmpty()
 ];
 
 router.post('/user/post/:post_id/comment', [verifyToken, postCommentChecks], async (req, res) => {
@@ -524,14 +523,15 @@ router.post('/user/post/:post_id/comment', [verifyToken, postCommentChecks], asy
 
     await post.save();
 
-    return res.json(post.comments);
+    //return res.json(post.comments);
+    return res.json(post);
   } catch (err) {
     res.status(500).send(err.message);
   }
 });
 
 ////////////////////////////////////////
-// POST DELETE COMMENT [take token, give post comments]
+// POST DELETE COMMENT [take token, give post]
 
 router.delete('/user/post/:post_id/comment/:comment_id', verifyToken, async (req, res) => {
   try {
@@ -558,7 +558,8 @@ router.delete('/user/post/:post_id/comment/:comment_id', verifyToken, async (req
     
     await post.save();
  
-    return res.json(post.comments);
+    //return res.json(post.comments);
+    return res.json(post);
   } catch (err) {
     res.status(500).send(err.message);
   }

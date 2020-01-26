@@ -19,6 +19,7 @@ import ProfileExpAdd from './profile/ProfileExpAdd';
 import ProfileList from './profile/ProfileList';
 import ProfileView from './profile/ProfileView';
 import PostList from './post/PostList';
+import PostDiscussion from './post/PostDiscussion';
 
 import { useEffect } from 'react'; // lifecycle hook
 
@@ -56,6 +57,7 @@ function App() {
             <Route exact path="/profiles" component={ProfileList} />
             <Route exact path="/profile/:user_id" component={ProfileView} />
             {/*dev*/}<PrivateRoute exact path="/posts" component={PostList} />
+            {/*dev*/}<PrivateRoute exact path="/post/:post_id" component={PostDiscussion} />
           </Switch>
         </Fragment>
       </Router>

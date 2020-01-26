@@ -26,6 +26,62 @@ export const getPosts = () => {
   }
 }
 
+export const getPostById = (postId) => {
+  return async (dispatch) => {
+    const url = `http://localhost:5000/api/post/${postId}`;
+    const opts = {
+      headers: {
+        'user-token': localStorage.getItem('user_token')
+      }
+    };
+    try {
+      const res = await fetch(url, opts);
+      const resBody = await res.json();
+
+      dispatch({
+        type: 'SET_CURRENT_POST',
+        payload: resBody
+      });
+    }
+    catch (er) {
+      dispatch({
+        type: 'GET_POSTS_ERROR',
+        payload: er
+      })
+    }
+  }
+}
+
+export const submitPost = (newPost) => {
+  return async (dispatch) => {
+    const url = `http://localhost:5000/api/user/post`;
+    const opts = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'user-token': localStorage.getItem('user_token')
+      },
+      body: JSON.stringify(newPost)
+    };
+    try {
+      const res = await fetch(url, opts);
+      const resBody = await res.json();
+
+      if (res.status !== 200) throw resBody;
+
+      dispatch({
+        type: 'ON_POST_SUBMIT',
+        payload: resBody
+      });
+    }
+    catch (er) {
+      if (er.errors) {
+        er.errors.map(er => dispatch(setAlert('danger', er.msg)));
+      }
+    }
+  }
+}
+
 export const deletePost = (postId) => {
   return async (dispatch) => {
     const url = `http://localhost:5000/api/user/post/${postId}`;
@@ -71,6 +127,8 @@ export const likePost = (postId) => {
         type: 'ON_LIKE_UPDATE',
         payload: resBody
       });
+
+      dispatch(getPosts());
     }
     catch (er) {
       dispatch({
@@ -81,16 +139,16 @@ export const likePost = (postId) => {
   }
 }
 
-export const submitPost = (newPost) => {
+export const submitComment = (postId, newComment) => {
   return async (dispatch) => {
-    const url = `http://localhost:5000/api/user/post`;
+    const url = `http://localhost:5000/api/user/post/${postId}/comment`;
     const opts = {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
         'user-token': localStorage.getItem('user_token')
       },
-      body: JSON.stringify(newPost)
+      body: JSON.stringify(newComment)
     };
     try {
       const res = await fetch(url, opts);
@@ -99,9 +157,11 @@ export const submitPost = (newPost) => {
       if (res.status !== 200) throw resBody;
 
       dispatch({
-        type: 'ON_SUBMIT_POST',
+        type: 'ON_COMMENT_SUBMIT',
         payload: resBody
       });
+
+      dispatch(getPosts());
     }
     catch (er) {
       if (er.errors) {
@@ -109,4 +169,38 @@ export const submitPost = (newPost) => {
       }
     }
   }
+}
+
+export const deleteComment = (postId, commentId) => {
+  return async (dispatch) => {
+    const url = `http://localhost:5000/api/user/post/${postId}/comment/${commentId}`;
+    const opts = {
+      method: 'delete',
+      headers: {
+        'user-token': localStorage.getItem('user_token')
+      }
+    };
+    try {
+      const res = await fetch(url, opts);
+      const resBody = await res.json();
+
+      if (res.status !== 200) throw resBody;
+
+      dispatch({
+        type: 'ON_COMMENT_DELETE',
+        payload: resBody
+      });
+
+      dispatch(getPosts());
+    }
+    catch (er) {
+      if (er.errors) {
+        er.errors.map(er => dispatch(setAlert('danger', er.msg)));
+      }
+    }
+  }
+}
+
+export const clearCurrentPost = () => {
+  return { type: 'CLEAR_CURRENT_POST' }
 }

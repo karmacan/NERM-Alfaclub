@@ -27,6 +27,7 @@ function profileReducer(state = initialState, action) {
 
     case 'USER_OBSERVE_PROFILES':
     case 'USER_PROFILE_LOGOUT':
+      //console.log('USER_PROFILE_LOGOUT');
       return {
         ...state,
         currentProfile: null,

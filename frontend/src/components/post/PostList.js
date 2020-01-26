@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import { getPosts } from '../../storage/post/PostDispatcher';
 import { deletePost } from '../../storage/post/PostDispatcher';
 import { submitPost } from '../../storage/post/PostDispatcher';
+import { clearCurrentPost } from '../../storage/post/PostDispatcher';
+import { likePost } from '../../storage/post/PostDispatcher';
 
 import PostListItem from './PostListItem';
 import Spinner from '../_layouts/Spinner';
@@ -25,11 +27,13 @@ function PostList(props) {
 
   useEffect(() => {
     if (props.post.isLoading) props.getPosts();
+    if (props.post.currentPost) props.clearCurrentPost();
+    //console.log(props.post.currentPost);
   });
 
   const mapPosts = () => {
     if (!props.post.posts) return null;
-    return props.post.posts.map(post => <PostListItem post={post} deletePost={props.deletePost} key={shortid.generate()} />)
+    return props.post.posts.map(post => <PostListItem post={post} deletePost={props.deletePost} likePost={props.likePost} key={shortid.generate()} />)
   }
 
   const handOnSubmit = (ev) => {
@@ -56,9 +60,9 @@ function PostList(props) {
       </p>
 
       {/* <!-- Submit Post --> */}
-      <form className="dev-form bg-secondary my-1 p-1">
+      <form className="dev-form bg-light my-1 p-1">
         <div className="p-1 bg-primary">
-          <h4>Make A New Post</h4>
+          <h4>Make A Post</h4>
         </div>
         <div className="dev-form-field">
           <textarea 
@@ -93,7 +97,9 @@ const mapStateToProps = (rootState) => ({
 const mapDispetcherToProps = {
   getPosts,
   deletePost,
-  submitPost
+  likePost,
+  submitPost,
+  clearCurrentPost
 }
 
 export default connect(mapStateToProps, mapDispetcherToProps)(PostList);

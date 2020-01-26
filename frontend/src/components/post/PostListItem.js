@@ -1,16 +1,21 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Moment from 'react-moment';
 
+import { helpProfileGetByUserId } from '../../config/helpers';
+
 import { connect } from 'react-redux';
-import { likePost } from '../../storage/post/PostDispatcher';
+import { profileGetByUserId } from '../../storage/profile/profileDispatcher';
 
 function PostListItem(props) {
+  const history = useHistory();
+
   const {
-    _id,
-    user: userId,
+    _id, /* post id */
+    user: userId, /* post user */
     avatar: gravatar,
     userName,
     text,
@@ -19,15 +24,12 @@ function PostListItem(props) {
     likes
   } = props.post;
 
-  const ifPostUserIsAuthUser = () => {
-    if (userId === props.auth.user._id) return (
-      <button 
-        className="btn btn-danger"
-        onClick={() => props.deletePost(_id)}
-        >
-        <i className="fas fa-trash"></i>
-      </button>
-    );
+  const handOnAvatarClick = async () => {
+    const profile = await helpProfileGetByUserId(userId);
+    if (profile) {
+      props.profileGetByUserId(userId);
+      history.push(`/profile/${profile._id}`);
+    }
   }
 
   const ifPostLikedByAuthUser = () => {
@@ -36,19 +38,31 @@ function PostListItem(props) {
     return 'btn btn-light';
   }
 
+  const ifPostUserIsAuthUser = () => {
+    if (userId === props.auth.user._id) return (
+      <button
+        className="btn btn-danger"
+        onClick={() => props.deletePost(_id)}
+      >
+        <i className="fas fa-trash"></i>
+      </button>
+    );
+  }
+
   return (
     <div className="dev-post card bg-light my-1 p-1">
 
       {/* USER */}
       <div>
-        <a href="profile.html">
+        <div>
           <img
             className="img img-round"
-            src={ gravatar }
+            src={gravatar}
             alt=""
+            onClick={ev => handOnAvatarClick(ev)}
           />
-          <h4>{ userName }</h4>
-        </a>
+          <h4>{userName}</h4>
+        </div>
       </div>
       {/* POST */}
       <div>
@@ -63,7 +77,8 @@ function PostListItem(props) {
         {/* Buttons */}
         <div className="dev-post-btns">
           {/* Discussion */}
-          <Link to={`/post/${props.post._id}`} className="btn btn-primary">
+          {/* {console.log(<Link to={`/post/${_id}`} className="btn btn-dark">Discussion</Link>) } */}
+          <Link to={`/post/${_id}`} className="btn btn-dark">
             Discussion
           </Link>
           {/* Comments */}
@@ -74,7 +89,10 @@ function PostListItem(props) {
           {/* Likes */}
           <button 
             className={ ifPostLikedByAuthUser() }
-            onClick={ () => props.likePost(_id) }
+            onClick={ () => { 
+              props.likePost(_id);
+              
+            }}
             >
             <i className="fas fa-heart"></i>
             &nbsp;{ likes.length }
@@ -92,7 +110,7 @@ const mapStateToProps = (rootState) => ({
 });
 
 const mapDispatcherToProps = {
-  likePost
+  profileGetByUserId
 }
 
 export default connect(mapStateToProps, mapDispatcherToProps)(PostListItem);
