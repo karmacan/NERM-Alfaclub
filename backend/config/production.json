@@ -1,0 +1,7 @@
+{
+  "mongoPath": "mongodb+srv://host:1234@devjar-hwxoj.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtPrivateKey": "c0dew0rd",
+  "//": "GitHub's OAuth (Client == App, Secret == Key)",
+  "oauthGithubClientId": "c271fdc94332cb651ccb",
+  "oauthGithubClientSecret": "581e9af5ca8dacf71732de621f06fb55f66b3fe7"
+}

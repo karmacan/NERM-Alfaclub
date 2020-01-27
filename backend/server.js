@@ -44,3 +44,17 @@ server.use(express.json({extended: false})); // must be before router
 // Separate router and set its router base (to every path)
 const routerBase = '/api';
 server.use(routerBase, require('./routes/api/router'));
+
+////////////////////////////////////////
+// HEROKU
+
+const path = require('path');
+
+if (process.env.NODE_ENV === 'production') {
+  // Set frontend static folder
+  server.use(exp.static('client/build'));
+  // Serve frontend buld
+  server.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../', 'frontend', 'build', 'index.html'))
+  });
+}
