@@ -51,7 +51,7 @@ if (process.env.NODE_ENV === 'production') {
   server.use(exp.static('client/build'));
   // Serve frontend buld
   server.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../', 'frontend', 'build', 'index.html'))
+    res.sendFile(path.join(__dirname, '../', 'frontend', 'build', 'index.html'))
   });
 }
 
