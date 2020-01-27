@@ -18,7 +18,7 @@ mongoose.connect(mongoPath, opts)
 
 const express = require('express');
 const server = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 ////////////////////////////////////////
 // ENABLE CORS (from frontend [localhost:3000] to backend [localhost:5000])
