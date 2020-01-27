@@ -1,5 +1,10 @@
 import React from 'react';
 
+import shortid from 'shortid';
+
+import PostListItem from './PostListItem';
+import Spinner from '../_layouts/Spinner';
+
 import { Link } from 'react-router-dom';
 
 import { useState } from 'react';
@@ -7,15 +12,10 @@ import { useEffect } from 'react';
 
 import { connect } from 'react-redux';
 import { getPosts } from '../../storage/post/PostDispatcher';
-import { deletePost } from '../../storage/post/PostDispatcher';
 import { submitPost } from '../../storage/post/PostDispatcher';
-import { clearCurrentPost } from '../../storage/post/PostDispatcher';
 import { likePost } from '../../storage/post/PostDispatcher';
-
-import PostListItem from './PostListItem';
-import Spinner from '../_layouts/Spinner';
-
-import shortid from 'shortid';
+import { deletePost } from '../../storage/post/PostDispatcher';
+import { clearCurrentPost } from '../../storage/post/PostDispatcher';
 
 function PostList(props) {
   const [ 

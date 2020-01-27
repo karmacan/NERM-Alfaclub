@@ -1,10 +1,17 @@
 import React from 'react';
 
+import { useHistory } from 'react-router-dom';
+
 import Moment from 'react-moment';
 
 import { connect } from 'react-redux';
+import { profileGetByUserId } from '../../storage/profile/profileDispatcher';
+
+import { helpProfileGetByUserId } from '../../config/helpers';
 
 function PostDiscussionComment(props) {
+  const history = useHistory();
+
   const {
     _id, /* comment id */
     user: userId, /* comment user id */
@@ -13,6 +20,14 @@ function PostDiscussionComment(props) {
     text,
     date
   } = props.comment;
+
+  const handOnAvatarClick = async () => {
+    const profile = await helpProfileGetByUserId(userId);
+    if (profile) {
+      props.profileGetByUserId(userId);
+      history.push(`/profile/${profile._id}`);
+    }
+  }
 
   const ifCommentUserIsAuthUser = () => {
     if (userId === props.auth.user._id) return (
@@ -33,6 +48,7 @@ function PostDiscussionComment(props) {
             className="img"
             src={ avatar }
             alt=""
+            onClick={ev => handOnAvatarClick(ev)}
           />
           <h4>{ userName }</h4>
         </div>
@@ -60,7 +76,7 @@ const mapStateToProps = (rootState) => ({
 });
 
 const mapDispatcherToProps = {
-  
+  profileGetByUserId
 }
 
 export default connect(mapStateToProps, mapDispatcherToProps)(PostDiscussionComment);

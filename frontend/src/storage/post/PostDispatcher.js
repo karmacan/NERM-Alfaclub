@@ -82,7 +82,7 @@ export const submitPost = (newPost) => {
   }
 }
 
-export const deletePost = (postId) => {
+export const deletePost = (postId, history = null) => {
   return async (dispatch) => {
     const url = `http://localhost:5000/api/user/post/${postId}`;
     const opts = {
@@ -101,6 +101,8 @@ export const deletePost = (postId) => {
         type: 'ON_POST_DELETE',
         payload: resBody
       });
+
+      if (history) history.push('/posts');
     }
     catch (er) {
       if (er.errors) {

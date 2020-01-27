@@ -2,8 +2,10 @@ import React from 'react';
 
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'; // allows to access props.history to redirect
 
 import Moment from 'react-moment';
 
@@ -14,11 +16,17 @@ import PostDiscussionComment from './PostDiscussionComment';
 
 import { connect } from 'react-redux';
 import { getPostById } from '../../storage/post/PostDispatcher';
+import { likePost } from '../../storage/post/PostDispatcher';
+import { deletePost } from '../../storage/post/PostDispatcher';
 import { submitComment } from '../../storage/post/PostDispatcher';
 import { deleteComment } from '../../storage/post/PostDispatcher';
-import { likePost } from '../../storage/post/PostDispatcher';
+import { profileGetByUserId } from '../../storage/profile/profileDispatcher';
+
+import { helpProfileGetByUserId } from '../../config/helpers';
 
 function PostDiscussion(props) {
+  const history = useHistory();
+
   const [
     newComment,
     setNewComment
@@ -30,6 +38,14 @@ function PostDiscussion(props) {
     if (!props.post.currentPost) props.getPostById(props.match.params.post_id);
     //console.log(props.post.currentPost);
   });
+
+  const handOnAvatarClick = async () => {
+    const profile = await helpProfileGetByUserId(userId);
+    if (profile) {
+      props.profileGetByUserId(userId);
+      history.push(`/profile/${profile._id}`);
+    }
+  }
 
   if (!props.post.currentPost) return <Spinner />
 
@@ -54,7 +70,7 @@ function PostDiscussion(props) {
     if (userId === props.auth.user._id) return (
       <button
         className="btn btn-danger"
-        onClick={() => props.deletePost(_id)}
+        onClick={() => props.deletePost(_id, props.history)}
       >
         <i className="fas fa-trash"></i>
       </button>
@@ -95,6 +111,7 @@ function PostDiscussion(props) {
               className="img img-round"
               src={ avatar }
               alt=""
+              onClick={ev => handOnAvatarClick(ev)}
             />
             <h4>{ userName }</h4>
           </div>
@@ -161,9 +178,11 @@ const mapStateToProps = (rootState) => ({
 
 const mapDispetcherToProps = {
   getPostById,
+  likePost,
+  deletePost,
   submitComment,
   deleteComment,
-  likePost
+  profileGetByUserId
 };
 
-export default connect(mapStateToProps, mapDispetcherToProps)(PostDiscussion);
+export default connect(mapStateToProps, mapDispetcherToProps)(withRouter(PostDiscussion));
