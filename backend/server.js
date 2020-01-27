@@ -18,7 +18,11 @@ mongoose.connect(mongoPath, opts)
 
 const express = require('express');
 const server = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000; // for heroku deployment
+
+server.listen(port, () => {
+  console.log(`_dev_ App started on port ${port}!`);
+});
 
 ////////////////////////////////////////
 // ENABLE CORS (from frontend [localhost:3000] to backend [localhost:5000])
@@ -54,7 +58,3 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, '../', 'frontend', 'build', 'index.html'))
   });
 }
-
-server.listen(port, () => {
-  console.log(`_dev_ App started on port ${port}!`);
-});
