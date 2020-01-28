@@ -1,8 +1,10 @@
+import { proxy } from './global';
+
 import { setAlert } from '../_layouts/layoutsDispatcher'; // use inside dispatch
 
 export const getPosts = () => {
   return async (dispatch) => {
-    const url = 'http://localhost:5000/api/posts';
+    const url = proxy + '/api/posts';
     const opts = {
       headers: {
         'user-token': localStorage.getItem('user_token')
@@ -28,7 +30,7 @@ export const getPosts = () => {
 
 export const getPostById = (postId) => {
   return async (dispatch) => {
-    const url = `http://localhost:5000/api/post/${postId}`;
+    const url = proxy + `/api/post/${postId}`;
     const opts = {
       headers: {
         'user-token': localStorage.getItem('user_token')
@@ -54,7 +56,7 @@ export const getPostById = (postId) => {
 
 export const submitPost = (newPost) => {
   return async (dispatch) => {
-    const url = `http://localhost:5000/api/user/post`;
+    const url = proxy + `/api/user/post`;
     const opts = {
       method: 'post',
       headers: {
@@ -84,7 +86,7 @@ export const submitPost = (newPost) => {
 
 export const deletePost = (postId, history = null) => {
   return async (dispatch) => {
-    const url = `http://localhost:5000/api/user/post/${postId}`;
+    const url = proxy + `/api/user/post/${postId}`;
     const opts = {
       method: 'delete',
       headers: {
@@ -114,7 +116,7 @@ export const deletePost = (postId, history = null) => {
 
 export const likePost = (postId) => {
   return async (dispatch) => {
-    const url = `http://localhost:5000/api/user/post/${postId}/like`;
+    const url = proxy + `/api/user/post/${postId}/like`;
     const opts = {
       method: 'put',
       headers: {
@@ -143,7 +145,7 @@ export const likePost = (postId) => {
 
 export const submitComment = (postId, newComment) => {
   return async (dispatch) => {
-    const url = `http://localhost:5000/api/user/post/${postId}/comment`;
+    const url = proxy + `/api/user/post/${postId}/comment`;
     const opts = {
       method: 'post',
       headers: {
@@ -175,7 +177,7 @@ export const submitComment = (postId, newComment) => {
 
 export const deleteComment = (postId, commentId) => {
   return async (dispatch) => {
-    const url = `http://localhost:5000/api/user/post/${postId}/comment/${commentId}`;
+    const url = proxy + `/api/user/post/${postId}/comment/${commentId}`;
     const opts = {
       method: 'delete',
       headers: {

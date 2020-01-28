@@ -1,8 +1,10 @@
+import { proxy } from './global';
+
 import { setAlert } from '../_layouts/layoutsDispatcher'; // use inside dispatch
 
 export const userSignup = (name, email, pass) => {
   return async (dispatch) => {
-    const url = 'https://immense-eyrie-79200.herokuapp.com/api/user/singup';
+    const url = proxy + '/api/user/singup';
     const opts = {
       method: 'post',
       headers: {
@@ -42,7 +44,7 @@ export const userSignup = (name, email, pass) => {
 
 export const userLogin = (email, pass) => {
   return async (dispatch) => {
-    const url = 'https://immense-eyrie-79200.herokuapp.com/api/user/login';
+    const url = proxy + '/api/user/login';
     const opts = {
       method: 'post',
       headers: {
@@ -88,7 +90,7 @@ export const userLoad = () => {
       return;
     }
 
-    const url = 'https://immense-eyrie-79200.herokuapp.com/api/user/load';
+    const url = proxy + '/api/user/load';
     const opts = {
       method: 'get',
       headers: {
