@@ -2,7 +2,7 @@ import { setAlert } from '../_layouts/layoutsDispatcher'; // use inside dispatch
 
 export const profileGet = () => {
   return async (dispatch) => {
-    const url = 'http://localhost:5000/api/user/profile';
+    const url = 'https://immense-eyrie-79200.herokuapp.com/api/user/profile';
     const opts = {
       headers: {
         'user-token': localStorage.getItem('user_token')
@@ -42,7 +42,7 @@ export const profilePost = (formData, history, isEdit = false) => {
       }
     };
 
-    const url = 'http://localhost:5000/api/user/profile';
+    const url = 'https://immense-eyrie-79200.herokuapp.com/api/user/profile';
     const opts = {
       method: 'post',
       headers: {
@@ -80,7 +80,7 @@ export const profileDelete = () => {
   return async (dispatch) => {
     if (!window.confirm('Are you sure?')) return;
 
-    const url = 'http://localhost:5000/api/user/profile';
+    const url = 'https://immense-eyrie-79200.herokuapp.com/api/user/profile';
     const opts = {
       method: 'delete',
       headers: {
@@ -103,7 +103,7 @@ export const profileDelete = () => {
 
 export const eduAdd = (formData, history) => {
   return async (dispatch) => {
-    const url = 'http://localhost:5000/api/user/profile/education';
+    const url = 'https://immense-eyrie-79200.herokuapp.com/api/user/profile/education';
     const opts = {
       method: 'put',
       headers: {
@@ -139,7 +139,7 @@ export const eduAdd = (formData, history) => {
 
 export const expAdd = (formData, history) => {
   return async (dispatch) => {
-    const url = 'http://localhost:5000/api/user/profile/job_exp';
+    const url = 'https://immense-eyrie-79200.herokuapp.com/api/user/profile/job_exp';
     const opts = {
       method: 'put',
       headers: {
@@ -175,7 +175,7 @@ export const expAdd = (formData, history) => {
 
 export const eduDelete = (id) => {
   return async (dispatch) => {
-    const url = `http://localhost:5000/api/user/profile/education/${id}`;
+    const url = `https://immense-eyrie-79200.herokuapp.com/api/user/profile/education/${id}`;
     const opts = {
       method: 'delete',
       headers: {
@@ -204,7 +204,7 @@ export const eduDelete = (id) => {
 
 export const expDelete = (id) => {
   return async (dispatch) => {
-    const url = `http://localhost:5000/api/user/profile/job_exp/${id}`;
+    const url = `https://immense-eyrie-79200.herokuapp.com/api/user/profile/job_exp/${id}`;
     const opts = {
       method: 'delete',
       headers: {
@@ -235,7 +235,7 @@ export const profilesGet = () => {
   return async (dispatch) => {
     dispatch({type: 'USER_OBSERVE_PROFILES'});
 
-    const url = 'http://localhost:5000/api/profiles';
+    const url = 'https://immense-eyrie-79200.herokuapp.com/api/profiles';
     try {
       const res = await fetch(url);
       const resBody = await res.json();
@@ -256,7 +256,7 @@ export const profilesGet = () => {
 
 export const profileGetByUserId = (userId) => {
   return async (dispatch) => {
-    const url = `http://localhost:5000/api/profile/${userId}`;
+    const url = `https://immense-eyrie-79200.herokuapp.com/api/profile/${userId}`;
     try {
       const res = await fetch(url);
       const resBody = await res.json();
@@ -279,7 +279,7 @@ export const profileGetByUserId = (userId) => {
 
 export const getGithubRepos = (githubUsername) => {
   return async (dispatch) => {
-    const url = `http://localhost:5000/api/github/${githubUsername}/repos`;
+    const url = `https://immense-eyrie-79200.herokuapp.com/api/github/${githubUsername}/repos`;
     try {
       const res = await fetch(url);
       const resBody = await res.json();
