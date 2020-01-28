@@ -1,4 +1,4 @@
-import { proxy } from './global';
+import { proxy } from '../../config/global';
 
 import { setAlert } from '../_layouts/layoutsDispatcher'; // use inside dispatch
 
