@@ -12,19 +12,19 @@ function Welcome(props) {
     <div className="dev-landing">
       <div className="overlay-dark">
         <div className="dev-landing-inner">
-          <h1 className="txt-l">Connect Proggrammers</h1>
-          <p className="txt-m">Website for developers to create personal profiles, shere posts and communicate with other developers</p>
+          <h1 className="txt-l">Приветствуем в комманде!</h1>
+          <p className="txt-m">Все специалисты в одном месте. Вступай в комманду AlfaStrah!</p>
           {/* Button Panel */}
           <div className="case">
             <Link 
               to="/signup" 
               className="btn btn-round btn-primary">
-              Register
+              Зарегистрироваться
             </Link>
             <Link 
               to="/login" 
               className="btn btn-round">
-              Enter
+              Войти
             </Link>
           </div>
         </div>

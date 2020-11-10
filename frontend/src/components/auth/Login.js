@@ -52,7 +52,7 @@ function Login(props) {
       <h1 className="txt-l txt-primary">Log In</h1>
       <p className="txt-m">
         <i className="fas fa-sign-in-alt"></i>
-        &nbsp;Enter Your Account
+        &nbsp;Войдите в свой аккаунт
       </p>
       {/* LOGIN FORM */}
       <form className="dev-form">
@@ -73,7 +73,7 @@ function Login(props) {
         <div className="dev-form-field">
           <input 
             type="password" 
-            placeholder="Password" 
+            placeholder="Пароль" 
             //minLength="4" 
 
             name='pass'
@@ -85,7 +85,7 @@ function Login(props) {
         <div className="dev-form-field">
           <input 
             type="submit" 
-            value="Submit" 
+            value="Войти" 
             className="btn btn-primary" 
 
             onClick={ (ev) => handOnSubmit(ev) }
@@ -93,8 +93,8 @@ function Login(props) {
         </div>
       </form>
       <p className="my-1">
-        Don't have an account?
-        &nbsp;<Link to="/signup">Sign Up</Link>
+        У вас нет аккаунта?
+        &nbsp;<Link to="/signup">Зарегистрироваться</Link>
       </p>
     </section>
   );

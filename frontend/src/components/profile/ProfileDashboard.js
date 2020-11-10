@@ -48,9 +48,9 @@ function ProfileDashboard(props) {
       <h1 className="txt-l txt-primary">Dashboard</h1>
       <p className="txt-m">
         <i className="fas fa-user"></i>
-        &nbsp;Manage Your Profile
+        &nbsp;Управление Аккаунтом
       </p>
-      <p className="txt-m my-1">You haven't created your profile yet, please create one!</p>
+      <p className="txt-m my-1">Если у вас еще нет своего профайла - создайте его!</p>
       <Link to="/profile/create" className="btn btn-primary my-1">Create Profile</Link>
     </section>
   );
@@ -60,7 +60,7 @@ function ProfileDashboard(props) {
       <h1 className="txt-l txt-primary">Dashboard</h1>
       <p className="txt-m">
         <i className="fas fa-user"></i>
-        &nbsp;Manage Your Profile
+        &nbsp;Управление Аккаунтом
       </p>
 
       {/* Dashboard Buttons */}
@@ -78,7 +78,7 @@ function ProfileDashboard(props) {
           onClick={() => props.profileDelete()}
           >
           <i className="fas fa-user-minus"></i> 
-          &nbsp;Delete My Profile
+          &nbsp;Удалить Мой Профайл
         </button>
       </div>
 

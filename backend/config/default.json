@@ -1,5 +1,7 @@
 {
-  "mongoPath": "mongodb+srv://host:1234@devjar-hwxoj.mongodb.net/test?retryWrites=true&w=majority",
+  "//": "MongoDB Atlas",
+  "mongoPath": "mongodb+srv://host:1234@alfaclub-cluster.hwxoj.mongodb.net/alfaclub-db?retryWrites=true&w=majority",
+  
   "jwtPrivateKey": "c0dew0rd",
 
   "//": "GitHub's OAuth (Client == App, Secret == Key)",

@@ -141,7 +141,7 @@
 }
 
 .badge-primary {
-  background: #17a2b8;
+  background: #b81717;
   color: #fff;
 }
 
@@ -194,7 +194,7 @@
 }
 
 .bg-primary {
-  background: #17a2b8;
+  background: #ffffff;
   color: #fff;
 }
 
@@ -240,7 +240,7 @@
 }
 
 .txt-primary {
-  color: #17a2b8;
+  color: #b81717;
 }
 
 .btn {
@@ -261,12 +261,12 @@
 }
 
 .btn-primary {
-  background: #17a2b8;
+  background: #b81717;
   color: #fff;
 }
 
 .btn-primary:hover {
-  background: #1ab6cf;
+  background: #cf1a1a;
 }
 
 .btn-gray {
@@ -305,7 +305,7 @@
 }
 
 .alert.alert-primary {
-  background: #17a2b8;
+  background: #b81717;
   color: #fff;
 }
 
@@ -340,7 +340,7 @@ section:nth-of-type(1) {
 
 a {
   text-decoration: none;
-  color: #17a2b8;
+  color: #b81717;
 }
 
 ul {
@@ -363,7 +363,7 @@ ul {
   width: 100%;
   z-index: 1;
   border-bottom-style: solid;
-  border-bottom-color: #17a2b8;
+  border-bottom-color: #b81717;
   border-bottom-width: 1px;
 }
 
@@ -380,14 +380,14 @@ ul {
 }
 
 .dev-nav a:hover {
-  color: #17a2b8;
+  color: #b81717;
 }
 
 .dev-landing {
-  background-image: url("../_res/imgs/bgr_landing.jpg");
+  /* background-image: url("../_res/imgs/bgr_landing.jpg");
   background-repeat: no-repeat;
   background-position: right bottom;
-  background-size: cover;
+  background-size: cover; */
 }
 
 .dev-landing-inner {
@@ -449,9 +449,9 @@ ul {
 
 .dev-form input:focus {
   outline: none;
-  border: 2px solid rgba(23, 162, 184, 0.5);
-  -webkit-box-shadow: 0 0 6px rgba(23, 162, 184, 0.3);
-          box-shadow: 0 0 6px rgba(23, 162, 184, 0.3);
+  border: 2px solid rgba(184, 23, 23, 0.5);
+  -webkit-box-shadow: 0 0 6px rgba(184, 23, 23, 0.3);
+          box-shadow: 0 0 6px rgba(184, 23, 23, 0.3);
 }
 
 .dev-form input[type="password"], .dev-form input[type="submit"] {
@@ -483,7 +483,7 @@ ul {
 
 .dev-form-field select:focus {
   outline: none;
-  border: 2px solid rgba(23, 162, 184, 0.5);
+  border: 2px solid rgba(184, 23, 23, 0.5);
   -webkit-box-shadow: 0 0 6px rgba(23, 162, 184, 0.3);
           box-shadow: 0 0 6px rgba(23, 162, 184, 0.3);
 }
@@ -513,9 +513,9 @@ ul {
 
 .dev-form-field textarea:focus {
   outline: none;
-  border: 2px solid rgba(23, 162, 184, 0.5);
-  -webkit-box-shadow: 0 0 6px rgba(23, 162, 184, 0.3);
-          box-shadow: 0 0 6px rgba(23, 162, 184, 0.3);
+  border: 2px solid rgba(184, 23, 23, 0.5);
+  -webkit-box-shadow: 0 0 6px rgba(184, 23, 23, 0.3);
+          box-shadow: 0 0 6px rgba(184, 23, 23, 0.3);
 }
 
 .social-input {

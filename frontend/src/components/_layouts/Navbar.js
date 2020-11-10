@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import './Navbar.css';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
@@ -6,24 +7,26 @@ import { userLogout } from '../../storage/auth/authDispetcher';
 
 function Navbar(props) {
   ////////////////////////////////////////
-  // DYNAMIC MARKUP
+  /// DYNAMIC MARKUP
 
   const ifElseIsAuthed = () => {
     if (props.isAuthed) return (
       <Fragment>
-        <h1>
+        
           <Link to="/profile/dashboard">
-            <i className="fas fa-code"></i>
-            <span>&nbsp;Dashboard</span>
+            <h1 className='logo'>
+              {/* <i className="fas fa-code"></i> */}
+              <div className="logo-icon"></div>
+              <span>&nbsp;Дашборд</span>
+            </h1>
           </Link>
-        </h1>
         <ul>
-          <li><Link to="/profiles">Profiles</Link></li>
-          <li><Link to="/posts">Posts</Link></li>
+          <li><Link to="/profiles">Профайлы</Link></li>
+          <li><Link to="/posts">Посты</Link></li>
           <li>
             <Link to="/" onClick={props.userLogout}>
               <i className="fa fa-sign-out"></i>
-              <span className="hidden-s">&nbsp;Logout</span>
+              <span className="hidden-s">&nbsp;Выйти</span>
             </Link>
           </li>
         </ul>
@@ -31,33 +34,34 @@ function Navbar(props) {
     );
     else return (
       <Fragment>
-        <h1>
           <Link to="/">
-            <i className="fas fa-code"></i>
-            <span>&nbsp;Welcome</span>
+            <h1 className='logo'>
+              {/* <i className="fas fa-code"></i> */}
+              <div className="logo-icon"></div>
+              <div className='logo-name'>AlfaClub (Beta)</div>
+            </h1>
           </Link>
-        </h1>
         <ul>
-          <li><Link to="/profiles">Profiles</Link></li>
-          <li><Link to="/signup">Signup</Link></li>
-          <li><Link to="/login">Login</Link></li>
+          <li><Link to="/profiles">Профайлы</Link></li>
+          <li><Link to="/signup">Зарегистрироваться</Link></li>
+          <li><Link to="/login">Войти</Link></li>
         </ul>
       </Fragment>
     );
   }
 
   ////////////////////////////////////////
-  // RETURN JSX
+  /// RETURN JSX
 
   return (
     <nav className="dev-nav bg-dark">
-    { ifElseIsAuthed() }
-  </nav>
+      { ifElseIsAuthed() }
+    </nav>
   );
 }
 
 ////////////////////////////////////////
-// CONNECT REDUX
+/// CONNECT REDUX
 
 const mapStateToProps = rootState => {
   return {

@@ -5,3 +5,14 @@
 .dev-table th:nth-child(5) {
   width: 10%;
 }
+
+@media (max-width: 1000px) {
+  .dev-buttons .btn {
+    /* background: red; */
+    width: 100% !important;
+    margin: /*T*/0 /*R*/0 /*B*/5px /*L*/0;
+  }
+  .dev-buttons .btn:first-of-type {
+    /* margin-left: 16px; */
+  }
+}

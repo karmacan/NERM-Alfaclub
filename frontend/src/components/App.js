@@ -29,7 +29,7 @@ import { userLoad } from '../storage/auth/authDispetcher';
 
 function App() {
   ////////////////////////////////////////
-  // COMPONENT DID HOOK
+  /// COMPONENT DID HOOK
 
   useEffect(() => {
     //console.log('Component Did Mount/Updated!');
@@ -37,7 +37,7 @@ function App() {
   }, []);
 
   ////////////////////////////////////////
-  // RETURN JSX
+  /// RETURN JSX
 
   return (
     <Provider store={store}>

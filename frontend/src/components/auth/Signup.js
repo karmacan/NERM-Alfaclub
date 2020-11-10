@@ -46,7 +46,7 @@ function Signup(props) {
 
     if (pass !== repass) { 
       //console.log('Passwords don\'t match!'); 
-      props.setAlert('danger', 'Passwords don\'t match!')
+      props.setAlert('danger', 'Пароль неверный!')
       return; 
     }
 
@@ -63,7 +63,7 @@ function Signup(props) {
       <h1 className="txt-l txt-primary">Sign Up</h1>
       <p className="txt-m">
         <i className="fas fa-user-plus"></i>
-        &nbsp;Create Your Account
+        &nbsp;Создайте свой аккаунт
       </p>
       {/* SIGNUP FORM */}
       <form className="dev-form">
@@ -71,7 +71,7 @@ function Signup(props) {
         <div className="dev-form-field">
           <input 
             type="text" 
-            placeholder="Name" 
+            placeholder="Имя" 
             //required 
             autoComplete="off"
 
@@ -80,7 +80,7 @@ function Signup(props) {
             value={ name } /* formData.name */
             onChange={ (ev) => handOnChange(ev) }
           />
-          <small className="txt-s">Enter your preferable name</small>
+          <small className="txt-s">Введите имя и фамилию</small>
         </div>
         {/* Email */}
         <div className="dev-form-field">
@@ -93,13 +93,13 @@ function Signup(props) {
             value={ email }
             onChange={ (ev) => handOnChange(ev) }
           />
-          <small className="txt-s">For auto avatar use your Gravatar email</small>
+          <small className="txt-s">*Сайт использует Gravatar для аватара</small>
         </div>
         {/* Pass */}
         <div className="dev-form-field">
           <input 
             type="password" 
-            placeholder="Password" 
+            placeholder="Пароль" 
             //minLength="4" 
 
             name='pass'
@@ -111,7 +111,7 @@ function Signup(props) {
         <div className="dev-form-field">
           <input 
             type="password" 
-            placeholder="Confirm Password" 
+            placeholder="Повторите Пароль" 
             //minLength="4" 
 
             name="repass"
@@ -123,7 +123,7 @@ function Signup(props) {
         <div className="dev-form-field">
           <input 
             type="submit" 
-            value="Submit" 
+            value="Создать" 
             className="btn btn-primary" 
 
             onClick={ (ev) => handOnSubmit(ev) }
@@ -131,8 +131,8 @@ function Signup(props) {
         </div>
       </form>
       <p className="my-1">
-        Already have an account?
-        &nbsp;<Link to="/login">Log In</Link>
+        Уже есть аккаунт?
+        &nbsp;<Link to="/login">Войти</Link>
       </p>
     </section>
   );

@@ -1,0 +1,18 @@
+.logo {
+  display: flex;
+}
+
+.logo-icon {
+  /* display: inline-block; */
+  height: 30px;
+  width: 30px;
+  background: url('../../_res/imgs/alfaclub/logo.png') center /contain no-repeat;
+}
+
+.logo-name {
+  margin-left: 5px;
+  line-height: 30px;
+  /* color: #E20026; */
+  color: #fff;
+  font-weight: bold;
+}
