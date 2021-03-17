@@ -13,7 +13,7 @@ Backend managing api routing via backend routing requests and db interactions. A
 Frontend contains rendering index and components from which it built. Interactions between components executed via frontend routing. Also include storage which load global states and actions.
 
 # Repo Link
-https://xxx-alfaclub.herokuapp.com/
+https://alfaclub.herokuapp.com/
 
 <!-- # App Screens
 Back
