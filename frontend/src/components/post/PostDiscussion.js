@@ -94,13 +94,13 @@ function PostDiscussion(props) {
       <div className="my-2">
         <Link to="/posts" className="btn btn-gray">
           <i className="fas fa-chevron-left"></i>
-          &nbsp;Back To Posts
+          &nbsp;Назад к постам
         </Link>
       </div>
 
       <p className="txt-m">
         <i className="fas fa-file"></i>
-        &nbsp;Post Discussion
+        &nbsp;Обсуждение поста
       </p>
 
       {/* Post */}

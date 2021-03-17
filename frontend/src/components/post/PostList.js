@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Post.css';
+
 import shortid from 'shortid';
 
 import PostListItem from './PostListItem';
@@ -50,19 +52,19 @@ function PostList(props) {
       <div className="my-2">
         <Link to="/profile/dashboard" className="btn btn-gray">
           <i className="fas fa-chevron-left"></i>
-          &nbsp;Back To Dashboard
+          &nbsp;Назад к дашборду
         </Link>
       </div>
 
       <p className="txt-m">
         <i className="fas fa-copy"></i>
-        &nbsp;Community Posts
+        &nbsp;Посты сообщества
       </p>
 
       {/* <!-- Submit Post --> */}
       <form className="dev-form bg-light my-1 p-1">
         <div className="p-1 bg-primary">
-          <h4>Make A Post</h4>
+          <h4>Создать пост</h4>
         </div>
         <div className="dev-form-field">
           <textarea 

@@ -111,7 +111,7 @@ class ProfileView extends React.Component {
       ));
       return (
         <div className="grid-profile-edu card p-2">
-          <h2 className="txt-primary">Education</h2>
+          <h2 className="txt-primary">Образование</h2>
           { xEducation }
         </div>
       );
@@ -168,7 +168,7 @@ class ProfileView extends React.Component {
           <i className="fab fa-github"></i>
           &nbsp;Github Repos
         </h2>
-        <p className="txt-m">Oops, looks like user hasn't specified the github account...</p>
+        <p className="txt-m">Упс, похоже пользователь не указал свой Github аккаунт...</p>
       </div>
     );
 
@@ -256,7 +256,7 @@ class ProfileView extends React.Component {
           {/* { console.log(this.props.profile.currentProfile) } */}
           <Link to="/profiles" className="btn btn-gray">
             <i className="fas fa-chevron-left"></i>
-            &nbsp;Back To Profiles
+            &nbsp;Назад к профайлам
           </Link>
     
           <div className="grid-profile">
@@ -286,7 +286,7 @@ class ProfileView extends React.Component {
               { this.ifBio() }
     
               {/* Skills */}
-              <h2 className="txt-primary">Skill Set</h2>
+              <h2 className="txt-primary">Навыки</h2>
               <div className="dev-skills row row-center">
                 { this.mapSkills() }
               </div>

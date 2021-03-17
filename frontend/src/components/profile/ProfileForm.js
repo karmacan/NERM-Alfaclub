@@ -145,7 +145,7 @@ function ProfileForm(props) {
       <div className="my-1">
         <Link to="/profile/dashboard" className="btn btn-gray">
           <i className="fas fa-chevron-left"></i>
-          &nbsp;Back To Dashboard
+          &nbsp;Назад к дашборду
         </Link>
       </div>
 

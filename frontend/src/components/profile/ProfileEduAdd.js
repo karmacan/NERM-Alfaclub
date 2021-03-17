@@ -43,13 +43,13 @@ function ProfileEduAdd(props) {
       <div className="my-2">
         <Link to="/profile/dashboard" className="btn btn-gray">
           <i className="fas fa-chevron-left"></i>
-          &nbsp;Back To Dashboard
+          &nbsp;Назад к дашборду
         </Link>
       </div>
 
       <p className="txt-m">
         <i className="fas fa-graduation-cap"></i>
-        &nbsp;Add Education
+        &nbsp;Добавить образование
       </p>
       <p className="txt-s">
         &nbsp;Add any school/bootcamp that you have attended

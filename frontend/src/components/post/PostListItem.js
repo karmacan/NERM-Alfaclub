@@ -80,7 +80,7 @@ function PostListItem(props) {
           {/* Discussion */}
           {/* {console.log(<Link to={`/post/${_id}`} className="btn btn-dark">Discussion</Link>) } */}
           <Link to={`/post/${_id}`} className="btn btn-dark">
-            Discussion
+            Обсуждение
           </Link>
           {/* Comments */}
           <div className="card">

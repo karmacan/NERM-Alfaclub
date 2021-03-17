@@ -10,14 +10,14 @@ function ProfileEduTable(props) {
 
   return (
     <Fragment>
-      <h2 className="my-1">Education Credentials</h2>
+      <h2 className="my-1">Информация об образовании</h2>
       <table className="dev-table my-1">
           <thead>
             <tr>
               <th>School</th>
-              <th className="hidden-s">Majoring In</th>
-              <th className="hidden-s">Degree</th>
-              <th className="hidden-s">Years</th>
+              <th className="hidden-s">Специализация</th>
+              <th className="hidden-s">Степень</th>
+              <th className="hidden-s">Стаж</th>
               <th></th>
             </tr>
           </thead>

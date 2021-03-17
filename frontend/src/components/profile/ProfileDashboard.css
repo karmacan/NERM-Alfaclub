@@ -16,3 +16,8 @@
     /* margin-left: 16px; */
   }
 }
+
+.grid-profile-info.bg-primary.p-2 {
+  color: #000;
+  padding-bottom: 0;
+}
